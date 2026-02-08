@@ -1,0 +1,167 @@
+================================================================================
+PLAYINTEL PRODUCTION READINESS TEST SUITE
+================================================================================
+Started: 2026-01-20 16:32:35
+
+================================================================================
+TEST 1: Response Consistency vs Randomness
+================================================================================
+
+Testing question: 'What are the top 5 FPS games?'
+  Attempt 1: 1501 chars, SQL: SELECT name, recommendations, positive_reviews, avg_hours_pl...
+  Attempt 2: 1632 chars, SQL: SELECT name, total_owners, recommendations, avg_hours_played...
+  Attempt 3: 1416 chars, SQL: SELECT name, total_owners, recommendations, rating_percentag...
+
+  Analysis:
+    SQL Consistent: False (⚠️)
+    Answers Identical: False (✅)
+    Avg Length: 1516 chars, Variance: 77
+    Verdict: NEEDS REVIEW
+
+Testing question: 'Show me successful indie games'
+  Attempt 1: 1247 chars, SQL:  SELECT      name,      total_owners,      recommendations, ...
+  Attempt 2: 1135 chars, SQL: SELECT name, total_owners, recommendations, rating_percentag...
+  Attempt 3: 1669 chars, SQL:          SELECT              name,              total_owners...
+
+  Analysis:
+    SQL Consistent: False (⚠️)
+    Answers Identical: False (✅)
+    Avg Length: 1350 chars, Variance: 212
+    Verdict: NEEDS REVIEW
+
+Testing question: 'What games have the best value?'
+  ❌ Attempt 1 failed: HTTP 500
+  Attempt 2: 1141 chars, SQL: SELECT name, price_usd, avg_hours_played, hours_per_dollar  ...
+  Attempt 3: 1377 chars, SQL: SELECT appid, name, price_usd, avg_hours_played, hours_per_d...
+
+================================================================================
+Test 1 Result: FAIL
+================================================================================
+
+================================================================================
+TEST 2: Context Relevance
+================================================================================
+
+Question: 'What are the top 3 FPS games?'
+  Relevance Score: 60.0%
+  Found Keywords: ['fps', 'counter-strike', 'pubg']
+  Missing Keywords: ['shooter', 'first-person']
+  Verdict: RELEVANT ✅
+
+Question: 'Show me free to play games'
+  ❌ Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=20)
+
+Question: 'Which games have the best reviews?'
+  Relevance Score: 80.0%
+  Found Keywords: ['rating', 'review', 'positive', '%']
+  Missing Keywords: ['score']
+  Verdict: RELEVANT ✅
+
+Question: 'What games support Linux?'
+  Relevance Score: 100.0%
+  Found Keywords: ['linux', 'platform']
+  Verdict: RELEVANT ✅
+
+================================================================================
+Test 2 Result: FAIL
+================================================================================
+
+================================================================================
+TEST 3: Backend Exposure (Technical Details Leakage)
+================================================================================
+
+Question: 'What are the top games?'
+  ❌ Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=20)
+
+Question: 'Show me FPS games'
+  ✅ Clean - No technical details exposed
+
+Question: 'Which developers make the best games?'
+  ✅ Clean - No technical details exposed
+
+Question: 'What's the most popular genre?'
+  ✅ Clean - No technical details exposed
+
+Question: 'Tell me about free games'
+  ✅ Clean - No technical details exposed
+
+================================================================================
+Test 3 Result: FAIL
+================================================================================
+
+================================================================================
+TEST 4: Long Conversation Coherence (20+ Messages)
+================================================================================
+
+Starting 20-message conversation...
+
+[1/20] User: What are the top 3 FPS games?
+     ✅ Context maintained
+[2/20] User: Tell me more about the first one
+     ✅ Context maintained
+[3/20] User: What's its player count?
+     ✅ Context maintained
+[4/20] User: How does that compare to PUBG?
+     ✅ Context maintained
+[5/20] User: What genre is PUBG?
+     ✅ Context maintained
+[6/20] User: Show me other battle royale games
+     ❌ Context lost - Expected: ['apex', 'fortnite', 'battle']
+[7/20] User: Which one is free to play?
+     ❌ Context lost - Expected: ['free', 'apex', 'f2p']
+[8/20] User: What's Apex's rating?
+     ✅ Context maintained
+[9/20] User: Compare it to the first game we discussed
+     ✅ Context maintained
+[10/20] User: What platform does that run on?
+     ✅ Context maintained
+[11/20] User: Show me Windows-only shooters
+     ❌ Context lost - Expected: ['windows', 'shooter', 'fps']
+[12/20] User: Which has the most DLC?
+     ✅ Context maintained
+[13/20] User: Is that a good sign?
+     ✅ Context maintained
+[14/20] User: What about the game with the least DLC from that list?
+     ✅ Context maintained
+[15/20] User: How many languages does it support?
+     ✅ Context maintained
+[16/20] User: Compare that to the average
+     ✅ Context maintained
+[17/20] User: What's considered good language support?
+     ✅ Context maintained
+[18/20] User: Which games from our earlier discussion have that?
+     ✅ Context maintained
+[19/20] User: Rank them by player count
+     ❌ Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=20)
+
+================================================================================
+Long Conversation Results:
+  Context Maintained: 15/20
+  Context Lost: 3/20
+  Retention Rate: 75.0%
+  ⚠️  Acceptable context retention
+
+================================================================================
+Test 4 Result: WARNING
+================================================================================
+
+✅ Test results saved to: /Users/tosdaboss/playintel/test_results.json
+
+================================================================================
+PRODUCTION READINESS SUMMARY
+================================================================================
+
+Tests Run: 4
+  ✅ Passed: 0
+  ⚠️  Warnings: 1
+  ❌ Failed: 3
+
+❌ Response Consistency: FAIL
+❌ Context Relevance: FAIL
+❌ Backend Exposure: FAIL
+⚠️ Long Conversation: WARNING
+
+================================================================================
+❌ TESTS FAILED - Fix issues before production deployment
+================================================================================
+

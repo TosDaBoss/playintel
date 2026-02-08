@@ -1,0 +1,126 @@
+{
+  "timestamp": "2026-01-20T22:54:43.949476",
+  "tests": [
+    {
+      "test_name": "Vocabulary Variety",
+      "tests": [
+        {
+          "attempt": 1,
+          "overused_found": [],
+          "passed": true
+        },
+        {
+          "attempt": 2,
+          "overused_found": [],
+          "passed": true
+        },
+        {
+          "attempt": 3,
+          "overused_found": [],
+          "passed": true
+        }
+      ],
+      "variety": {
+        "unique_responses": 3,
+        "total_responses": 3,
+        "passed": true
+      },
+      "overall_status": "PASS"
+    },
+    {
+      "test_name": "No Backend Exposure",
+      "tests": [
+        {
+          "question": "What are the top FPS games?",
+          "backend_terms_found": [],
+          "passed": true
+        },
+        {
+          "question": "Show me action games",
+          "backend_terms_found": [],
+          "passed": true
+        }
+      ],
+      "overall_status": "PASS"
+    },
+    {
+      "test_name": "Includes Requested Data",
+      "tests": [
+        {
+          "question": "Show me games with highest ratings and most owners",
+          "sql_includes_required": true,
+          "data_includes_required": true,
+          "passed": true
+        },
+        {
+          "question": "What are the top-rated action games?",
+          "sql_includes_required": true,
+          "data_includes_required": true,
+          "passed": true
+        }
+      ],
+      "overall_status": "PASS"
+    },
+    {
+      "test_name": "Format Variety",
+      "tests": [
+        {
+          "question": "What are the top 3 games?",
+          "expected_type": "list",
+          "detected_format": "advice",
+          "passed": true
+        },
+        {
+          "question": "Compare Indie vs AAA games",
+          "expected_type": "comparison",
+          "detected_format": "comparison",
+          "passed": true
+        }
+      ],
+      "formats_detected": [
+        "advice",
+        "comparison"
+      ],
+      "variety_passed": true,
+      "overall_status": "PASS"
+    },
+    {
+      "test_name": "Direct Answers",
+      "tests": [
+        {
+          "question": "What's the average playtime for $15 games?",
+          "number_in_first_100_chars": false,
+          "has_generic_opening": true,
+          "passed": false
+        },
+        {
+          "question": "How many FPS games are there?",
+          "number_in_first_100_chars": true,
+          "has_generic_opening": false,
+          "passed": true
+        }
+      ],
+      "overall_status": "FAIL"
+    },
+    {
+      "test_name": "Query Consistency",
+      "tests": [
+        {
+          "topic": "$20 game playtime",
+          "questions_tested": 2,
+          "numbers_extracted": [
+            6.7,
+            6.7
+          ],
+          "min_value": 6.7,
+          "max_value": 6.7,
+          "variance": 0.0,
+          "variance_pct": 0.0,
+          "passed": true
+        }
+      ],
+      "overall_status": "PASS"
+    }
+  ],
+  "summary": {}
+}

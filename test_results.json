@@ -1,0 +1,105 @@
+{
+  "timestamp": "2026-01-20T16:39:13.087795",
+  "tests": [
+    {
+      "test_name": "Response Consistency",
+      "status": "PASS",
+      "details": [
+        {
+          "question": "What are the top 5 FPS games?",
+          "sql_consistent": false,
+          "answers_identical": false,
+          "avg_answer_length": 1210,
+          "length_variance": 77,
+          "verdict": "NEEDS REVIEW"
+        },
+        {
+          "question": "Show me successful indie games",
+          "sql_consistent": false,
+          "answers_identical": false,
+          "avg_answer_length": 1745,
+          "length_variance": 521,
+          "verdict": "NEEDS REVIEW"
+        },
+        {
+          "question": "What games have the best value?",
+          "sql_consistent": false,
+          "answers_identical": false,
+          "avg_answer_length": 1167,
+          "length_variance": 215,
+          "verdict": "NEEDS REVIEW"
+        }
+      ]
+    },
+    {
+      "test_name": "Context Relevance",
+      "status": "FAIL",
+      "details": [
+        {
+          "question": "What are the top 3 FPS games?",
+          "relevance_score": 60.0,
+          "found_keywords": [
+            "fps",
+            "counter-strike",
+            "pubg"
+          ],
+          "missing_keywords": [
+            "shooter",
+            "first-person"
+          ],
+          "unwanted_found": [],
+          "verdict": "RELEVANT"
+        },
+        {
+          "question": "Show me free to play games",
+          "relevance_score": 33.3,
+          "found_keywords": [
+            "free"
+          ],
+          "missing_keywords": [
+            "f2p",
+            "$0"
+          ],
+          "unwanted_found": [],
+          "verdict": "RELEVANT"
+        }
+      ]
+    },
+    {
+      "test_name": "Backend Exposure",
+      "status": "PASS",
+      "details": [
+        {
+          "question": "What are the top games?",
+          "forbidden_terms_found": [],
+          "sql_in_answer": false,
+          "verdict": "CLEAN"
+        },
+        {
+          "question": "Show me FPS games",
+          "forbidden_terms_found": [],
+          "sql_in_answer": false,
+          "verdict": "CLEAN"
+        },
+        {
+          "question": "Which developers make the best games?",
+          "forbidden_terms_found": [],
+          "sql_in_answer": false,
+          "verdict": "CLEAN"
+        },
+        {
+          "question": "What's the most popular genre?",
+          "forbidden_terms_found": [],
+          "sql_in_answer": false,
+          "verdict": "CLEAN"
+        },
+        {
+          "question": "Tell me about free games",
+          "forbidden_terms_found": [],
+          "sql_in_answer": false,
+          "verdict": "CLEAN"
+        }
+      ]
+    }
+  ]
+}

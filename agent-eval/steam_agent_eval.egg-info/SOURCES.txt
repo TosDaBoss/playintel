@@ -1,0 +1,17 @@
+README.md
+pyproject.toml
+src/__init__.py
+src/clients.py
+src/evaluator.py
+src/reporter.py
+src/rules.py
+src/scoring.py
+src/utils.py
+steam_agent_eval.egg-info/PKG-INFO
+steam_agent_eval.egg-info/SOURCES.txt
+steam_agent_eval.egg-info/dependency_links.txt
+steam_agent_eval.egg-info/requires.txt
+steam_agent_eval.egg-info/top_level.txt
+tests/test_evaluator.py
+tests/test_rules.py
+tests/test_scoring.py

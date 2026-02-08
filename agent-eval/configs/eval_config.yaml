@@ -1,0 +1,121 @@
+# Agent Evaluation Configuration
+# ================================
+
+# Generation settings for agent responses
+generation:
+  max_tokens: 500
+  temperature: 0.7
+  # Optional: top_p, frequency_penalty, presence_penalty
+
+# Scoring configuration
+scoring:
+  # Minimum score to pass a dimension (0-5 scale)
+  pass_threshold: 3.5
+
+  # Weights for each dimension in overall score calculation
+  weights:
+    naturalness: 1.0
+    depth_per_token: 1.0
+    table_judgement: 1.0
+    variability: 1.0
+    scenario_handling: 1.0
+
+# Rule-based failure detection thresholds
+rules:
+  # Percentage of responses with tables to trigger table_overuse violation
+  table_overuse_threshold: 0.4
+
+  # Percentage of responses with same opening to trigger repetitive_opening violation
+  repetitive_opening_threshold: 0.2
+
+  # Minimum characters in opening to consider for repetition check
+  opening_min_length: 20
+
+  # Enable/disable specific rules
+  enabled:
+    persona_introduction: true
+    blunt_disclaimer: true
+    filler_phrases: true
+    table_overuse: true
+    repetitive_openings: true
+
+# Execution settings
+execution:
+  # Run tests in parallel
+  parallel: false
+
+  # Number of parallel workers (if parallel: true)
+  max_workers: 4
+
+  # Retry failed tests
+  retry_on_error: true
+  max_retries: 2
+
+  # Timeout per test in seconds
+  timeout: 60
+
+# LLM Judge settings (optional, for more nuanced scoring)
+llm_judge:
+  # Enable LLM-as-judge scoring
+  enabled: false
+
+  # Model to use for judging (requires judge_client in code)
+  # model: "gpt-4" or "claude-3-opus"
+
+  # Temperature for judge responses
+  temperature: 0.3
+
+# Report settings
+reporting:
+  # Output directory for reports (relative to project root)
+  output_dir: "reports"
+
+  # Include full agent responses in markdown reports
+  include_responses: false
+
+  # Generate comparison charts (requires matplotlib)
+  generate_charts: false
+
+# CI/CD integration
+ci:
+  # Pass rate threshold for CI to pass (0.0-1.0)
+  pass_rate_threshold: 0.8
+
+  # Overall score threshold for CI to pass (0.0-5.0)
+  overall_score_threshold: 3.5
+
+  # Exit code on failure
+  fail_exit_code: 1
+
+# Scenarios configuration
+scenarios:
+  # Path to scenarios JSON file (relative to project root)
+  path: "prompts/test_scenarios.json"
+
+  # Filter scenarios by category (empty = all)
+  categories: []
+
+  # Filter scenarios by difficulty (empty = all)
+  difficulties: []
+
+  # Maximum scenarios to run (0 = all)
+  max_scenarios: 0
+
+# Agent policy settings
+agent_policy:
+  # Path to agent policy markdown file
+  path: "agent_policy.md"
+
+  # Use policy as system prompt
+  use_as_system_prompt: true
+
+# Logging
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+
+  # Log file path (empty = console only)
+  file: ""
+
+  # Include timestamps in logs
+  timestamps: true

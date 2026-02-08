@@ -1,0 +1,149 @@
+Alex's Steam Market Analysis Knowledge Base
+===========================================
+
+QUALITY SIGNALS (in order of reliability):
+
+1. RECOMMENDATIONS (Most Reliable)
+   - Total "thumbs up" from Steam users - official endorsement
+   - MORE reliable than reviews (harder to manipulate)
+   - 100+ recommendations = decent quality signal
+   - 1,000+ recommendations = strong quality
+   - 10,000+ recommendations = exceptional
+   - NOTE: ~70% of indie games have <100 recommendations
+
+2. METACRITIC SCORE
+   - Professional critic score (0-100)
+   - NULL for ~70% of games (mostly indie - critics don't review everything)
+   - When present: 75+ = good, 80+ = very good, 85+ = exceptional
+   - Use for comparisons with big titles, but DON'T penalize indies for missing scores
+
+3. POSITIVE REVIEWS
+   - User reviews on Steam
+   - Can be manipulated (review bombing, fake reviews)
+   - Best used alongside recommendations for validation
+   - High reviews + low recommendations = potential manipulation red flag
+
+MARKET REACH INDICATORS:
+
+1. CROSS-PLATFORM SUPPORT
+   - Windows only: Standard (95% of games)
+   - Windows + Mac: Wider reach (~60% market expansion)
+   - Windows + Mac + Linux: Maximum reach (smaller but dedicated market)
+   - Pattern: Cross-platform games tend to have 20-30% more total owners
+
+2. LANGUAGE SUPPORT
+   - 1-3 languages: English-only or minimal localization
+   - 4-9 languages: Standard localization (EU focus)
+   - 10+ languages: Serious international strategy (includes Asian markets)
+   - Chinese + Russian = targeting massive markets (50%+ global PC gamers)
+
+MONETIZATION PATTERNS:
+
+1. DLC COUNT
+   - 0 DLC: One-time purchase model
+   - 1-3 DLC: Expansion pack strategy
+   - 4-10 DLC: Active post-launch support
+   - 10+ DLC: Heavy monetization (cosmetics, season passes)
+   - Pattern: Successful games with 5+ DLC = strong ongoing revenue
+
+2. PRICING + DLC RELATIONSHIP
+   - Budget ($0-$5) + 10+ DLC = F2P-style monetization
+   - Standard ($10-$30) + 3-5 DLC = Traditional expansion model
+   - Premium ($40+) + lots of DLC = AAA model
+
+ENGAGEMENT METRICS:
+
+1. ACHIEVEMENT COUNT
+   - 10-20 achievements: Standard
+   - 20-50 achievements: Replayability focus
+   - 50+ achievements: Heavy engagement mechanics
+   - Pattern: High achievement count correlates with longer avg_hours_played
+   - But: Some amazing games have 0 achievements (often indie)
+
+2. HOURS PER DOLLAR
+   - <5 hours/$: Short experience or poor value
+   - 5-20 hours/$: Standard value
+   - 20-50 hours/$: Great value
+   - 50+ hours/$: Exceptional value (or F2P)
+   - Pattern: Games with 30+ hours/$ tend to have "Very Positive" ratings
+
+PRACTICAL INSIGHTS FOR QUERIES:
+
+When users ask about "quality" games:
+- Prioritize recommendations >100 AND rating_percentage >80
+- Don't filter out games missing metacritic_score (hurts indies unfairly)
+- Look for engagement_score >70 as secondary signal
+
+When users ask about "successful" games:
+- total_owners is the key metric
+- Cross-reference with recommendations (high owners + low recommendations = bundle padding)
+- Check dlc_count for ongoing revenue (not just launch sales)
+
+When users ask about platform strategy:
+- Windows-only is FINE for first launch (95% of market)
+- Mac worth considering if your game is casual/creative/educational
+- Linux is niche but loyal (consider for retro/indie/simulation genres)
+
+When users ask about international markets:
+- English + Chinese + Russian = 70% of global PC gamers
+- Spanish + Portuguese = Latin America (growing market)
+- Japanese + Korean = high-value niche markets
+- Use language_count as proxy for international ambition
+
+RED FLAGS TO WATCH FOR:
+
+- High positive_reviews but low recommendations = potential manipulation
+- High total_owners but very low avg_hours_played = bundle fodder
+- Price drops >70% shortly after launch = desperation pricing
+- Zero DLC after 2+ years + high owners = abandoned game
+- Very high achievement_count but low engagement_score = achievement spam
+
+TAG AND GENRE SEARCHING (CRITICAL):
+
+**ALWAYS use case-insensitive search for tags and genres!**
+
+Correct approaches:
+- ILIKE operator: `WHERE top_tags ILIKE '%fps%'`
+- LOWER function: `WHERE LOWER(top_tags) LIKE '%fps%'`
+- LOWER with genres: `WHERE LOWER(genres) LIKE '%action%'`
+
+❌ WRONG (case-sensitive, will miss results):
+`WHERE top_tags LIKE '%FPS%'`  -- Misses "fps", "Fps", "First-Person Shooter"
+
+✅ CORRECT examples:
+- Find FPS games: `WHERE LOWER(top_tags) ILIKE '%fps%'`
+- Find action games: `WHERE LOWER(genres) ILIKE '%action%'`
+- Multiple tags: `WHERE LOWER(top_tags) ILIKE '%fps%' AND LOWER(top_tags) ILIKE '%multiplayer%'`
+
+Common tag formats:
+- "FPS, Shooter, Multiplayer" (capitalized)
+- "fps, first-person, action" (lowercase)
+- "First-Person Shooter, Action" (title case)
+
+DATA LIMITATIONS (be honest about these):
+
+- Metacritic score missing for 70% of games (mostly indie)
+- Recommendations scale with total_owners (older games have advantage)
+- Cross-platform data doesn't tell us SALES per platform
+- Language count doesn't tell us quality of localization
+- DLC count doesn't tell us revenue per DLC
+- Tags and genres are comma-separated text (not normalized)
+
+ANSWER PATTERNS:
+
+"Show me quality indie games":
+- recommendations >100 (or >50 for very small indies)
+- rating_percentage >75
+- avg_hours_played >10
+- DON'T require metacritic_score (unfair to indies)
+
+"What makes a game successful?":
+- total_owners (primary)
+- recommendations/owner ratio >0.01 (1% recommendation rate = engaged audience)
+- dlc_count >3 (ongoing support = ongoing revenue)
+- Cross-platform support (wider reach)
+
+"Should I add achievements?":
+- Look at similar games with achievement_count >30
+- Compare their avg_hours_played vs games with fewer achievements
+- Give data-driven answer, not generic advice

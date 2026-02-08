@@ -1,0 +1,6 @@
+PlayIntel Test Report
+Generated: 2026-01-17 16:52:23.001671
+Total Tests: 21
+Passed: 15
+Failed: 6
+Pass Rate: 71.4%

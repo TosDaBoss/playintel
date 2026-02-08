@@ -1,0 +1,398 @@
+{
+  "version": "1.0",
+  "description": "Test scenarios for Steam Analytics Agent evaluation",
+  "scenarios": [
+    {
+      "id": "top-sellers-001",
+      "category": "top_sellers",
+      "prompt": "What are the top selling games right now?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "current"}
+    },
+    {
+      "id": "top-sellers-002",
+      "category": "top_sellers",
+      "prompt": "Show me the best selling indie games this month",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "filtered"}
+    },
+    {
+      "id": "top-sellers-003",
+      "category": "top_sellers",
+      "prompt": "Which games under £20 are selling the most?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "price_filtered"}
+    },
+    {
+      "id": "genre-analysis-001",
+      "category": "genre_analysis",
+      "prompt": "How is the roguelike genre performing on Steam?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "genre"}
+    },
+    {
+      "id": "genre-analysis-002",
+      "category": "genre_analysis",
+      "prompt": "Compare the survival and city builder genres",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "comparison"}
+    },
+    {
+      "id": "genre-analysis-003",
+      "category": "genre_analysis",
+      "prompt": "What genres are growing the fastest?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "trend"}
+    },
+    {
+      "id": "genre-analysis-004",
+      "category": "genre_analysis",
+      "prompt": "Is the metroidvania genre oversaturated?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "analysis"}
+    },
+    {
+      "id": "pricing-001",
+      "category": "pricing",
+      "prompt": "What's the average price for roguelikes?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "single_value"}
+    },
+    {
+      "id": "pricing-002",
+      "category": "pricing",
+      "prompt": "Should I price my game at £15 or £20?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "recommendation"}
+    },
+    {
+      "id": "pricing-003",
+      "category": "pricing",
+      "prompt": "How do indie game prices compare to AAA prices?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "comparison"}
+    },
+    {
+      "id": "pricing-004",
+      "category": "pricing",
+      "prompt": "What's the sweet spot price point for a 10-hour indie game?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "recommendation"}
+    },
+    {
+      "id": "competitor-001",
+      "category": "competitor_analysis",
+      "prompt": "What similar games to Hades are performing well?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "similar_games"}
+    },
+    {
+      "id": "competitor-002",
+      "category": "competitor_analysis",
+      "prompt": "Analyze the competition in the deckbuilder space",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "market_analysis"}
+    },
+    {
+      "id": "competitor-003",
+      "category": "competitor_analysis",
+      "prompt": "Who are the main competitors for a farming sim?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "competitor_list"}
+    },
+    {
+      "id": "release-timing-001",
+      "category": "release_timing",
+      "prompt": "When's the best time to release an indie game?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "recommendation"}
+    },
+    {
+      "id": "release-timing-002",
+      "category": "release_timing",
+      "prompt": "Should I avoid releasing during the Steam summer sale?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "strategy"}
+    },
+    {
+      "id": "release-timing-003",
+      "category": "release_timing",
+      "prompt": "What major games are releasing in Q2 that I should avoid?",
+      "expects_table": true,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "hard", "data_type": "future_releases"}
+    },
+    {
+      "id": "wishlist-001",
+      "category": "wishlists",
+      "prompt": "How do wishlists convert to sales typically?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "conversion"}
+    },
+    {
+      "id": "wishlist-002",
+      "category": "wishlists",
+      "prompt": "What's a good wishlist count before launch?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "benchmark"}
+    },
+    {
+      "id": "review-analysis-001",
+      "category": "reviews",
+      "prompt": "What review score do I need for the algorithm to boost my game?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "threshold"}
+    },
+    {
+      "id": "review-analysis-002",
+      "category": "reviews",
+      "prompt": "How do mixed reviews affect sales?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "analysis"}
+    },
+    {
+      "id": "specific-game-001",
+      "category": "specific_game",
+      "prompt": "How is Stardew Valley performing?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "game_stats"}
+    },
+    {
+      "id": "specific-game-002",
+      "category": "specific_game",
+      "prompt": "Tell me about Balatro's success",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "case_study"}
+    },
+    {
+      "id": "specific-game-003",
+      "category": "specific_game",
+      "prompt": "What made Vampire Survivors so successful?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "analysis"}
+    },
+    {
+      "id": "market-trend-001",
+      "category": "trends",
+      "prompt": "What gaming trends should I watch in 2024?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "trend_forecast"}
+    },
+    {
+      "id": "market-trend-002",
+      "category": "trends",
+      "prompt": "Are cozy games still popular?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "trend_check"}
+    },
+    {
+      "id": "market-trend-003",
+      "category": "trends",
+      "prompt": "Is the indie market too crowded now?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "market_analysis"}
+    },
+    {
+      "id": "quick-question-001",
+      "category": "quick_answer",
+      "prompt": "How many games release on Steam daily?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "single_stat"}
+    },
+    {
+      "id": "quick-question-002",
+      "category": "quick_answer",
+      "prompt": "What's Steam's cut?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "single_stat"}
+    },
+    {
+      "id": "quick-question-003",
+      "category": "quick_answer",
+      "prompt": "How long do Steam sales last?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "single_stat"}
+    },
+    {
+      "id": "strategy-001",
+      "category": "strategy",
+      "prompt": "I'm making a pixel art roguelike, what should I know about the market?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "market_briefing"}
+    },
+    {
+      "id": "strategy-002",
+      "category": "strategy",
+      "prompt": "My game has 2000 wishlists, should I launch?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "recommendation"}
+    },
+    {
+      "id": "strategy-003",
+      "category": "strategy",
+      "prompt": "How can I stand out in a crowded genre?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "strategy"}
+    },
+    {
+      "id": "data-gap-001",
+      "category": "edge_case",
+      "prompt": "What's the revenue for Hollow Knight?",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "medium", "data_type": "private_data"}
+    },
+    {
+      "id": "data-gap-002",
+      "category": "edge_case",
+      "prompt": "How many copies did my competitor sell last month?",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "hard", "data_type": "private_data"}
+    },
+    {
+      "id": "data-gap-003",
+      "category": "edge_case",
+      "prompt": "What will be the next big genre?",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "hard", "data_type": "prediction"}
+    },
+    {
+      "id": "vague-query-001",
+      "category": "edge_case",
+      "prompt": "Tell me about Steam",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "easy", "data_type": "vague"}
+    },
+    {
+      "id": "vague-query-002",
+      "category": "edge_case",
+      "prompt": "What should I do?",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "hard", "data_type": "vague"}
+    },
+    {
+      "id": "multi-part-001",
+      "category": "complex",
+      "prompt": "Compare the roguelike and deckbuilder genres in terms of average price, review scores, and competition level",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "multi_comparison"}
+    },
+    {
+      "id": "multi-part-002",
+      "category": "complex",
+      "prompt": "I want to make a survival crafting game - show me the top performers, average price, and review trends for this genre",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "market_briefing"}
+    },
+    {
+      "id": "follow-up-001",
+      "category": "conversational",
+      "prompt": "Tell me more about that",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "medium", "data_type": "context_dependent", "note": "Simulates follow-up without prior context"}
+    },
+    {
+      "id": "opinion-001",
+      "category": "opinion",
+      "prompt": "Do you think my game idea is good?",
+      "expects_table": false,
+      "has_data_gap": true,
+      "metadata": {"difficulty": "medium", "data_type": "subjective"}
+    },
+    {
+      "id": "regional-001",
+      "category": "regional",
+      "prompt": "How does the Chinese market compare to Western markets on Steam?",
+      "expects_table": true,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "hard", "data_type": "regional_analysis"}
+    },
+    {
+      "id": "dlc-001",
+      "category": "dlc",
+      "prompt": "Should I release DLC or a sequel?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "strategy"}
+    },
+    {
+      "id": "early-access-001",
+      "category": "early_access",
+      "prompt": "Is early access still worth it in 2024?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "analysis"}
+    },
+    {
+      "id": "early-access-002",
+      "category": "early_access",
+      "prompt": "How long should early access last?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "recommendation"}
+    },
+    {
+      "id": "demo-001",
+      "category": "marketing",
+      "prompt": "Should I release a demo before launch?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "strategy"}
+    },
+    {
+      "id": "steam-features-001",
+      "category": "platform",
+      "prompt": "How important are Steam achievements for visibility?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "platform_feature"}
+    },
+    {
+      "id": "steam-features-002",
+      "category": "platform",
+      "prompt": "What Steam features should I definitely implement?",
+      "expects_table": false,
+      "has_data_gap": false,
+      "metadata": {"difficulty": "medium", "data_type": "recommendation"}
+    }
+  ]
+}

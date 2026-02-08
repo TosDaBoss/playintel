@@ -1,0 +1,30 @@
+<svg width="200" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CONCEPT 1: "The Aperture" - Updated to match teal color scheme -->
+  <!-- A layered, dynamic mark suggesting data layers and insight discovery -->
+
+  <!-- Icon: Stacked diamond/aperture shape with gradient -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D9488;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14B8A6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14B8A6;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#0D9488;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Back layer - offset -->
+  <rect x="8" y="10" width="24" height="24" rx="6" fill="url(#grad2)" transform="rotate(45 20 22)"/>
+
+  <!-- Front layer - main -->
+  <rect x="4" y="8" width="24" height="24" rx="6" fill="url(#grad1)" transform="rotate(45 16 20)"/>
+
+  <!-- Center aperture/window (negative space effect) -->
+  <rect x="12" y="16" width="8" height="8" rx="2" fill="white" transform="rotate(45 16 20)"/>
+
+  <!-- Wordmark: "PlayIntel" -->
+  <text x="52" y="32" font-family="Inter, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#0F172A">
+    Play<tspan fill="#0D9488">Intel</tspan>
+  </text>
+</svg>

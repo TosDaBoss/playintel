@@ -1,0 +1,79 @@
+{
+  "run_id": "agent_b_20260204_204624",
+  "agent_name": "agent_b",
+  "timestamp": "20260204_204624",
+  "config": {
+    "generation": {
+      "max_tokens": 500,
+      "temperature": 0.7
+    },
+    "scoring": {
+      "pass_threshold": 3.5,
+      "weights": {
+        "naturalness": 1.0,
+        "depth_per_token": 1.0,
+        "table_judgement": 1.0,
+        "variability": 1.0,
+        "scenario_handling": 1.0
+      }
+    },
+    "rules": {
+      "table_overuse_threshold": 0.4,
+      "repetitive_opening_threshold": 0.2
+    },
+    "execution": {
+      "parallel": false,
+      "max_workers": 4,
+      "retry_on_error": true,
+      "max_retries": 2
+    }
+  },
+  "summary": {
+    "total_scenarios": 1,
+    "passed": 1,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "aggregate_scores": {
+      "naturalness": 5.0,
+      "depth_per_token": 4.0,
+      "table_judgement": 5.0,
+      "variability": 5.0,
+      "scenario_handling": 4.3,
+      "overall": 4.66
+    }
+  },
+  "results": [
+    {
+      "scenario_id": "test-001",
+      "category": "test",
+      "prompt": "Test?",
+      "response": "For 50k wishlists, you're looking at 6-9 months of consistent visibility. Three factors dominate: trailer hook strength (first 10 seconds), demo availability during festivals, and steady devlog cadence. Games hitting this target average 2 festival appearances. I'd prioritize a demo for Next Fest\u2014it's the highest-conversion event we track.",
+      "latency_ms": 0.00095367431640625,
+      "passed": true,
+      "failure_reasons": [],
+      "violations": [],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.0,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 5,
+          "reasoning": "Correctly avoided table"
+        },
+        "scenario_handling": {
+          "score": 4.3,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 5.0,
+          "reasoning": "Not enough responses to measure variability"
+        }
+      }
+    }
+  ]
+}

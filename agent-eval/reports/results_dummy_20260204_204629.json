@@ -1,0 +1,174 @@
+{
+  "run_id": "dummy_20260204_204629",
+  "agent_name": "dummy",
+  "timestamp": "20260204_204629",
+  "summary": {
+    "total_scenarios": 5,
+    "passed": 1,
+    "failed": 4,
+    "pass_rate": 0.2
+  },
+  "aggregate_scores": {
+    "naturalness": 5.0,
+    "depth_per_token": 4.380000000000001,
+    "table_judgement": 2.6,
+    "variability": 3.2,
+    "scenario_handling": 4.1,
+    "overall": 3.8560000000000003
+  },
+  "results": [
+    {
+      "scenario_id": "top-sellers-001",
+      "category": "top_sellers",
+      "prompt": "What are the top selling games right now?",
+      "passed": false,
+      "failure_reasons": [
+        "Low score on table_judgement: 2.00 < 3.5"
+      ],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.4,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 2.0,
+          "reasoning": "Should have used table but didn't"
+        },
+        "scenario_handling": {
+          "score": 4.0,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 3.2,
+          "reasoning": "Opening diversity: 80.00%, Structure diversity: 40.00%"
+        }
+      }
+    },
+    {
+      "scenario_id": "top-sellers-002",
+      "category": "top_sellers",
+      "prompt": "Show me the best selling indie games this month",
+      "passed": false,
+      "failure_reasons": [
+        "Low score on table_judgement: 2.00 < 3.5"
+      ],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.4,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 2.0,
+          "reasoning": "Should have used table but didn't"
+        },
+        "scenario_handling": {
+          "score": 4.0,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 3.2,
+          "reasoning": "Opening diversity: 80.00%, Structure diversity: 40.00%"
+        }
+      }
+    },
+    {
+      "scenario_id": "top-sellers-003",
+      "category": "top_sellers",
+      "prompt": "Which games under \u00a320 are selling the most?",
+      "passed": false,
+      "failure_reasons": [
+        "Low score on table_judgement: 2.00 < 3.5"
+      ],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.4,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 2.0,
+          "reasoning": "Should have used table but didn't"
+        },
+        "scenario_handling": {
+          "score": 4.0,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 3.2,
+          "reasoning": "Opening diversity: 80.00%, Structure diversity: 40.00%"
+        }
+      }
+    },
+    {
+      "scenario_id": "genre-analysis-001",
+      "category": "genre_analysis",
+      "prompt": "How is the roguelike genre performing on Steam?",
+      "passed": true,
+      "failure_reasons": [],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.7,
+          "reasoning": "Provides non-obvious insights"
+        },
+        "table_judgement": {
+          "score": 5,
+          "reasoning": "Correctly avoided table"
+        },
+        "scenario_handling": {
+          "score": 4.5,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 3.2,
+          "reasoning": "Opening diversity: 80.00%, Structure diversity: 40.00%"
+        }
+      }
+    },
+    {
+      "scenario_id": "genre-analysis-002",
+      "category": "genre_analysis",
+      "prompt": "Compare the survival and city builder genres",
+      "passed": false,
+      "failure_reasons": [
+        "Low score on table_judgement: 2.00 < 3.5"
+      ],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.0,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 2.0,
+          "reasoning": "Should have used table but didn't"
+        },
+        "scenario_handling": {
+          "score": 4.0,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 3.2,
+          "reasoning": "Opening diversity: 80.00%, Structure diversity: 40.00%"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+name: Daily Data Refresh
+
+on:
+  # Run every day at 6 AM UTC (adjust to your timezone)
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Refresh mode'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - fetch-only
+          - enrich-only
+          - refresh-only
+          - analytics-only
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180  # 3 hour max (usually completes in 30-60 min)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install psycopg[binary] aiohttp requests
+
+      - name: Run data refresh
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+        run: |
+          cd etl
+
+          # Determine mode
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          else
+            MODE="full"
+          fi
+
+          # Run the appropriate command
+          case $MODE in
+            fetch-only)
+              python daily_refresh.py --fetch-only
+              ;;
+            enrich-only)
+              python daily_refresh.py --enrich-only
+              ;;
+            refresh-only)
+              python daily_refresh.py --refresh-only
+              ;;
+            analytics-only)
+              python daily_refresh.py --analytics-only
+              ;;
+            *)
+              python daily_refresh.py
+              ;;
+          esac
+
+      - name: Report status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Data refresh completed successfully"
+          else
+            echo "❌ Data refresh failed"
+          fi

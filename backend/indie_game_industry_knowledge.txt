@@ -1,0 +1,318 @@
+Indie Game Industry Knowledge Base
+===================================
+Insights from: Blood, Sweat, and Pixels (Jason Schreier), The Indie Game Developer Handbook,
+LEAN Startup Methodology
+
+=============================================================================
+PART 1: THE REALITY OF GAME DEVELOPMENT (from Blood, Sweat, and Pixels)
+=============================================================================
+
+THE FUNDAMENTAL QUESTION:
+"How are we gonna pay for this thing?" - This is the most important question in game dev.
+Financial pressure defines the industry. Every studio juggles contracts, funding, and timing.
+
+KEY LESSONS FROM SUCCESSFUL GAMES:
+
+1. PILLARS OF ETERNITY - Crowdfunding as Validation
+   - Obsidian was nearly bankrupt when Microsoft cancelled their project
+   - Kickstarter wasn't just funding - it was MARKET VALIDATION
+   - 74,000 backers proved demand before spending development money
+   - Lesson: Test the market before committing resources
+
+2. STARDEW VALLEY - Solo Dev Success Story
+   - Eric Barone spent 4+ years making it alone (estimated 6 months initially)
+   - Motivation: Loved Harvest Moon but saw the series declining
+   - Key: Didn't quit his day job until game was nearly done
+   - Lesson: Side projects can become million-sellers with patience
+
+3. DIABLO III - Server Launch Disasters (Error 37)
+   - Blizzard's servers couldn't handle launch demand
+   - Online-only requirement backfired spectacularly
+   - Lesson: Prepare for 10x expected demand; players will destroy your servers
+
+4. UNCHARTED 4 - The Cost of "Crunch"
+   - Naughty Dog's reputation: best games, worst crunch
+   - Extended 2-3am work sessions for months
+   - High quality comes with human cost
+   - Lesson: Sustainable pace > sprint-to-death
+
+5. STAR WARS 1313 - How Promising Games Die
+   - Perfect combination: Uncharted-style gameplay + Star Wars IP
+   - Cancelled when Disney bought LucasArts
+   - External factors can kill even sure things
+   - Lesson: Reduce dependencies on single stakeholders
+
+COMMON THEMES ACROSS ALL STORIES:
+- Every game is a miracle of survival
+- Scope creep is universal and deadly
+- "6 months" always becomes "2+ years"
+- Crunch happens everywhere, but it shouldn't
+- Market timing matters as much as quality
+
+=============================================================================
+PART 2: LEAN STARTUP METHODOLOGY FOR GAMES
+=============================================================================
+
+THE BUILD-MEASURE-LEARN LOOP:
+1. BUILD: Create a Minimum Viable Product (MVP)
+2. MEASURE: Test with real players, gather data
+3. LEARN: Validate or invalidate your assumptions
+4. Repeat faster than competitors
+
+MVP FOR GAMES:
+- Playable demo or prototype
+- NOT a polished vertical slice
+- Just enough to test core gameplay loop
+- Can be ugly if the FUN is there
+
+VALIDATED LEARNING:
+- Don't assume you know what players want
+- Test hypotheses with real data
+- Fail fast, learn faster
+- Pivot when data says you're wrong
+
+INNOVATION ACCOUNTING FOR GAME DEVS:
+Key metrics to track:
+- Playtest session length (are people engaged?)
+- Return rate (do they come back?)
+- Viral coefficient (do they tell friends?)
+- Conversion rate (wishlists to purchases)
+
+THE PIVOT DECISION:
+When to persevere:
+- Core loop is fun but needs polish
+- Early players are passionate (even if few)
+- Retention metrics are strong
+
+When to pivot:
+- Playtests show fundamental problems
+- Core mechanic isn't engaging
+- Market research shows saturated niche
+
+CONTINUOUS DEPLOYMENT FOR GAMES:
+- Early Access = continuous deployment
+- Ship updates weekly, not yearly
+- Each update is a learning opportunity
+- Use player feedback immediately
+
+THE FIVE WHYS FOR GAME PROBLEMS:
+Example: Players quit at level 3
+1. Why? The boss is too hard
+2. Why? Players don't have enough abilities
+3. Why? Progression is too slow
+4. Why? We balanced for hardcore players
+5. Why? We didn't test with casual players
+Solution: Add difficulty options OR fix progression
+
+=============================================================================
+PART 3: PRACTICAL ADVICE FOR INDIE DEVELOPERS
+=============================================================================
+
+FUNDING YOUR GAME:
+
+1. SELF-FUNDING (Bootstrap)
+   - Work part-time, make game on side
+   - Lowest risk, slowest progress
+   - Keep creative control
+   - Best for: solo devs, first projects
+
+2. CROWDFUNDING (Kickstarter/Fig)
+   - Market validation + funding in one
+   - Requires existing audience or hook
+   - Average successful game campaign: $50-100K
+   - Best for: established devs, sequels, nostalgia plays
+
+3. PUBLISHER FUNDING
+   - They take 30-70% of revenue
+   - Provide marketing, QA, sometimes dev support
+   - Milestone-based payments (risky if cancelled)
+   - Best for: teams needing >$500K
+
+4. EARLY ACCESS
+   - Players fund development directly
+   - Must have playable game already
+   - Requires constant communication
+   - Best for: roguelikes, survival, builders
+
+PRICING STRATEGY:
+
+THE $15 SWEET SPOT:
+- Under $10: Perceived as "small" game
+- $15-20: Optimal for substantial indie games
+- Over $30: Must compete with AAA expectations
+- Free-to-play: Only if you understand retention mechanics
+
+LAUNCH TIMING:
+- Avoid: November (AAA releases), Summer sales, Holiday season
+- Sweet spots: February, September, Early November
+- Never launch on Friday (no support staff on weekend)
+
+PLATFORM CONSIDERATIONS:
+- Steam: 30% cut, massive audience, high competition
+- Epic: 12% cut, smaller audience, exclusivity deals available
+- GOG: 30% cut, DRM-free niche, smaller but loyal
+- Console: Certification costs, but less competition per release
+
+=============================================================================
+PART 4: WHAT MAKES GAMES SUCCEED OR FAIL
+=============================================================================
+
+SUCCESS FACTORS (In Order of Importance):
+
+1. CORE GAMEPLAY LOOP
+   - Is the basic action FUN in the first 10 minutes?
+   - Can players easily understand what to do?
+   - Does it feel good to play (game feel/juice)?
+
+2. UNIQUE HOOK
+   - What makes your game different in ONE sentence?
+   - "It's like X but with Y" must be compelling
+   - If you can't explain it simply, rethink it
+
+3. MARKET TIMING
+   - Is the genre hot or oversaturated?
+   - Are players actively searching for this type of game?
+   - What just succeeded? What failed?
+
+4. VISIBILITY
+   - Can you get noticed among 15,000 Steam releases/year?
+   - Do you have a marketing plan beyond "launch and pray"?
+   - Social media, press, influencers, community
+
+5. POLISH
+   - First impressions matter (screenshots, trailer, demo)
+   - Bugs kill reviews faster than bad design
+   - UI/UX separates amateur from professional
+
+FAILURE PATTERNS:
+
+1. "Build it and they will come" - No marketing
+2. Feature creep - Scope grows, launch never comes
+3. Perfectionism - Polishing instead of shipping
+4. Wrong genre - Making games YOU want, not players want
+5. Solo island - No playtesting, no feedback
+6. Burnout - 80-hour weeks until you quit
+
+=============================================================================
+PART 5: COMMUNITY AND MARKETING
+=============================================================================
+
+BUILDING COMMUNITY BEFORE LAUNCH:
+
+START EARLY:
+- Begin marketing 6-12 months before launch
+- Twitter/Discord development logs
+- Monthly devlogs on Steam
+- Build wishlist momentum
+
+CONTENT THAT WORKS:
+- Before/after comparisons
+- "How I made X" technical posts
+- Failure stories (people love authenticity)
+- GIFs > Screenshots > Text
+
+INFLUENCER STRATEGY:
+- Target 10-100K subscriber YouTubers (more responsive than huge ones)
+- Provide press kit with assets, key facts, quotes
+- Offer keys 2 weeks before launch
+- Never pay for coverage (ruins credibility)
+
+POST-LAUNCH:
+- First 2 weeks are critical for Steam algorithm
+- Respond to ALL reviews (especially negative)
+- Update frequently, communicate roadmap
+- Sales spikes: Seasonal sales, updates, bundle deals
+
+=============================================================================
+PART 6: MENTAL HEALTH AND SUSTAINABILITY
+=============================================================================
+
+CRUNCH IS NOT A BADGE OF HONOR:
+- Extended crunch leads to burnout, not better games
+- Quality drops after ~40 hours/week sustained
+- Take breaks, your game will be better for it
+
+MANAGING EXPECTATIONS:
+- Most games lose money
+- Average indie game sells <1,000 copies
+- Plan for failure, be surprised by success
+
+THE LONG GAME:
+- First game is for learning
+- Second game builds on first
+- Success often comes on game 3, 4, or 5
+- Build audience across multiple releases
+
+WHEN TO QUIT:
+- Not when it's hard (it's always hard)
+- When you've lost passion AND the market says no
+- When health/relationships are seriously damaged
+- Quitting a bad project isn't failure - it's wisdom
+
+=============================================================================
+PART 7: GENRE-SPECIFIC ADVICE
+=============================================================================
+
+ROGUELIKES:
+- Strong genre on Steam, but saturated
+- Must have compelling loop in 10 minutes
+- Difficulty balance is everything
+- Examples: Hades, Dead Cells, Slay the Spire
+
+SURVIVAL/CRAFTING:
+- Early Access works well here
+- Need 100+ hours of content
+- Multiplayer adds longevity
+- Examples: Valheim, Subnautica, Rimworld
+
+NARRATIVE/STORY GAMES:
+- Lower replayability, need strong hook
+- Voice acting is expensive but impactful
+- Streaming can hurt OR help (depends on spoilers)
+- Examples: Disco Elysium, Undertale, Hades
+
+SIMULATION/MANAGEMENT:
+- Complex systems need great UI/UX
+- Tutorial is CRITICAL
+- Modding support extends life dramatically
+- Examples: Factorio, Rimworld, Stardew Valley
+
+MULTIPLAYER:
+- Hardest to make sustainable
+- Need critical mass of players
+- Server costs are ongoing
+- Consider bots for low-population situations
+
+=============================================================================
+QUICK REFERENCE: QUESTIONS INDIE DEVS ASK
+=============================================================================
+
+"Should I quit my job to make games?"
+- Not until you can survive 18+ months without income
+- Or until your side project proves market demand
+- Or unless you have a signed contract/funding
+
+"How long will development take?"
+- Take your estimate and multiply by 3
+- Add 6 months for polish
+- Add 3 months for unexpected disasters
+
+"How much should I charge?"
+- $15 for 5-10 hour experience
+- $20-25 for 20+ hour experience
+- $30+ only with exceptional content/polish
+
+"When should I launch?"
+- When the game is FUN, not when it's DONE
+- When you have 10K+ wishlists (for visibility)
+- Not within 2 weeks of any major release
+
+"Do I need a publisher?"
+- If you need funding: probably yes
+- If you need marketing help: maybe
+- If you value creative control: probably not
+
+"How do I get press coverage?"
+- Interesting hook + good press kit + right timing
+- Build relationships before you need coverage
+- Accept that most outlets won't respond

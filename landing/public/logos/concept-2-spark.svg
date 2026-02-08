@@ -1,0 +1,27 @@
+<svg width="200" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CONCEPT 2: "The Spark" - Energy, intelligence, gaming excitement -->
+  <!-- Modern, bold, with a spark/lightning element suggesting AI intelligence -->
+
+  <defs>
+    <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EF4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Icon container - rounded square -->
+  <rect x="4" y="8" width="32" height="32" rx="8" fill="#0F172A"/>
+
+  <!-- Spark/bolt icon inside -->
+  <path d="M22 14L14 26H19L17 34L26 22H21L22 14Z" fill="url(#sparkGrad)"/>
+
+  <!-- Small data dots suggesting analytics -->
+  <circle cx="12" cy="16" r="2" fill="#F59E0B" opacity="0.6"/>
+  <circle cx="28" cy="32" r="1.5" fill="#EC4899" opacity="0.6"/>
+
+  <!-- Wordmark: "PlayIntel" - bold, modern -->
+  <text x="48" y="32" font-family="Inter, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5" fill="#0F172A">
+    play<tspan font-weight="400">intel</tspan>
+  </text>
+</svg>

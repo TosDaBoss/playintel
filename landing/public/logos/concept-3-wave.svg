@@ -1,0 +1,35 @@
+<svg width="200" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CONCEPT 3: "The Wave" - Data flow, community, approachable -->
+  <!-- Soft, friendly, trustworthy with flowing curves suggesting data streams -->
+
+  <defs>
+    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#6366F1;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Icon: Stacked flowing waves/bars suggesting data visualization -->
+  <g>
+    <!-- Wave 1 (back) -->
+    <path d="M4 30C4 30 10 26 16 26C22 26 26 30 32 30C32 30 32 34 32 36C32 38 30 40 28 40H8C6 40 4 38 4 36V30Z" fill="url(#waveGrad2)"/>
+
+    <!-- Wave 2 (middle) -->
+    <path d="M4 22C4 22 10 18 18 18C26 18 32 22 32 22V28C32 28 26 24 18 24C10 24 4 28 4 28V22Z" fill="url(#waveGrad1)" opacity="0.7"/>
+
+    <!-- Wave 3 (front/top) -->
+    <path d="M4 14C4 12 6 10 8 10H28C30 10 32 12 32 14V18C32 18 26 14 18 14C10 14 4 18 4 18V14Z" fill="url(#waveGrad1)"/>
+
+    <!-- Play triangle accent -->
+    <path d="M15 20L23 24L15 28V20Z" fill="white" opacity="0.9"/>
+  </g>
+
+  <!-- Wordmark: "PlayIntel" - friendly, rounded feel -->
+  <text x="46" y="32" font-family="Inter, -apple-system, sans-serif" font-size="21" font-weight="600" fill="#0F172A">
+    Play<tspan fill="#0EA5E9" font-weight="700">Intel</tspan>
+  </text>
+</svg>

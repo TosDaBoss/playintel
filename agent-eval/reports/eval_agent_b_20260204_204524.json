@@ -1,0 +1,79 @@
+{
+  "run_id": "agent_b_20260204_204524",
+  "agent_name": "agent_b",
+  "timestamp": "20260204_204524",
+  "config": {
+    "generation": {
+      "max_tokens": 500,
+      "temperature": 0.7
+    },
+    "scoring": {
+      "pass_threshold": 3.5,
+      "weights": {
+        "naturalness": 1.0,
+        "depth_per_token": 1.0,
+        "table_judgement": 1.0,
+        "variability": 1.0,
+        "scenario_handling": 1.0
+      }
+    },
+    "rules": {
+      "table_overuse_threshold": 0.4,
+      "repetitive_opening_threshold": 0.2
+    },
+    "execution": {
+      "parallel": false,
+      "max_workers": 4,
+      "retry_on_error": true,
+      "max_retries": 2
+    }
+  },
+  "summary": {
+    "total_scenarios": 1,
+    "passed": 1,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "aggregate_scores": {
+      "naturalness": 5.0,
+      "depth_per_token": 4.4,
+      "table_judgement": 5.0,
+      "variability": 5.0,
+      "scenario_handling": 4.0,
+      "overall": 4.68
+    }
+  },
+  "results": [
+    {
+      "scenario_id": "test-001",
+      "category": "test",
+      "prompt": "Test?",
+      "response": "Two paths here. Premium pricing ($24.99+) works when you have 20+ hours and strong production values\u2014success rate around 12% for indies. Value pricing ($9.99-14.99) is safer with 45% hitting 50k owners. Given your scope, I'd lean toward $14.99 launch with planned price increases after positive review momentum.",
+      "latency_ms": 0.00095367431640625,
+      "passed": true,
+      "failure_reasons": [],
+      "violations": [],
+      "scores": {
+        "naturalness": {
+          "score": 5,
+          "reasoning": "Natural conversational tone"
+        },
+        "depth_per_token": {
+          "score": 4.4,
+          "reasoning": "Adequate depth"
+        },
+        "table_judgement": {
+          "score": 5,
+          "reasoning": "Correctly avoided table"
+        },
+        "scenario_handling": {
+          "score": 4.0,
+          "reasoning": "Standard scenario handling"
+        },
+        "variability": {
+          "score": 5.0,
+          "reasoning": "Not enough responses to measure variability"
+        }
+      }
+    }
+  ]
+}
