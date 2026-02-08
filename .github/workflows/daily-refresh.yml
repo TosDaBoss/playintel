@@ -40,7 +40,7 @@ jobs:
 
       - name: Run data refresh
         env:
-          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           cd etl
 
