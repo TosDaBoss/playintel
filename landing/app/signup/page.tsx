@@ -10,7 +10,7 @@ const PLANS = [
   {
     tier: 'free',
     name: 'Free',
-    price: '£0',
+    price: '$0',
     period: 'forever',
     queries: '5 queries/month',
     features: ['5 queries per month', 'Access to all 77,274 games', 'Basic market insights'],
@@ -18,7 +18,7 @@ const PLANS = [
   {
     tier: 'indie',
     name: 'Indie',
-    price: '£25',
+    price: '$29',
     period: '/month',
     queries: '150 queries/month',
     features: ['150 queries per month', 'Full market intelligence', 'Unlimited CSV exports', 'Chat history'],
@@ -27,7 +27,7 @@ const PLANS = [
   {
     tier: 'studio',
     name: 'Studio',
-    price: '£59',
+    price: '$69',
     period: '/user/month',
     queries: 'Unlimited',
     features: ['Unlimited queries', 'Everything in Indie', 'Team collaboration', 'API access (coming soon)'],

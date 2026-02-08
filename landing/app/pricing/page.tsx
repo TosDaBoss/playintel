@@ -16,7 +16,7 @@ const PLANS = [
   {
     id: 'free',
     name: 'Free',
-    price: '£0',
+    price: '$0',
     period: 'forever',
     description: 'Try PlayIntel with limited queries',
     queries: '5 queries/month',
@@ -33,7 +33,7 @@ const PLANS = [
   {
     id: 'indie',
     name: 'Indie',
-    price: '£25',
+    price: '$29',
     period: '/month',
     description: 'Perfect for solo developers and small teams',
     queries: '150 queries/month',
@@ -51,7 +51,7 @@ const PLANS = [
   {
     id: 'studio',
     name: 'Studio',
-    price: '£59',
+    price: '$69',
     period: '/user/month',
     description: 'For studios that need unlimited insights',
     queries: 'Unlimited queries',

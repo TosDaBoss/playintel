@@ -614,7 +614,7 @@ function PricingSection() {
   const tiers = [
     {
       name: 'Free',
-      price: '£0',
+      price: '$0',
       period: 'forever',
       description: 'Try PlayIntel with limited queries',
       queries: '5 queries/month',
@@ -630,7 +630,7 @@ function PricingSection() {
     },
     {
       name: 'Indie',
-      price: '£25',
+      price: '$29',
       period: '/month',
       description: 'Perfect for solo developers and small teams',
       queries: '150 queries/month',
@@ -647,7 +647,7 @@ function PricingSection() {
     },
     {
       name: 'Studio',
-      price: '£59',
+      price: '$69',
       period: '/user/month',
       description: 'For studios that need unlimited insights',
       queries: 'Unlimited queries',
