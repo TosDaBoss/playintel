@@ -6,13 +6,13 @@ import { Providers } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'PlayIntel — AI-Powered Steam Market Intelligence',
-  description: 'Talk to Steam data and get decision-grade answers in seconds. Validate game concepts, set competitive prices, and find underserved niches.',
-  keywords: ['steam', 'indie games', 'game development', 'market research', 'pricing', 'analytics'],
+  title: 'PlayIntel — AI-Powered Game Market Intelligence',
+  description: 'Talk to game market data and get decision-grade answers in seconds. Validate game concepts, set competitive prices, and find underserved niches.',
+  keywords: ['indie games', 'game development', 'market research', 'pricing', 'analytics', 'game market'],
   authors: [{ name: 'PlayIntel' }],
   openGraph: {
-    title: 'PlayIntel — AI-Powered Steam Market Intelligence',
-    description: 'Talk to Steam data and get decision-grade answers in seconds.',
+    title: 'PlayIntel — AI-Powered Game Market Intelligence',
+    description: 'Talk to game market data and get decision-grade answers in seconds.',
     type: 'website',
   },
 };

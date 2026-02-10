@@ -131,7 +131,7 @@ function LoginForm() {
           <div className="w-full max-w-md">
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-slate-900">Welcome back</h1>
-              <p className="mt-2 text-slate-600">Sign in to access Steam market intelligence</p>
+              <p className="mt-2 text-slate-600">Sign in to access game market intelligence</p>
             </div>
 
             {/* Login Form */}
@@ -284,7 +284,7 @@ function LoginForm() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-slate-900 mb-4">
-              Talk to Steam data like never before
+              Talk to game market data like never before
             </h2>
             <p className="text-slate-600 mb-8 leading-relaxed">
               Ask questions in plain English and get data-driven insights from 77,274 games.

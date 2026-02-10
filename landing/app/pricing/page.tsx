@@ -302,7 +302,7 @@ export default function PricingPage() {
           </div>
 
           <p className="mt-12 text-center text-sm text-slate-500">
-            All plans include access to our full database of 77,274 Steam games.
+            All plans include access to our full database of 77,274 games.
             <br />
             Questions? Contact us at support@playintel.io
           </p>

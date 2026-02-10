@@ -147,10 +147,10 @@ function Navigation() {
                   Sign in
                 </a>
                 <a
-                  href="#access"
+                  href="/signup"
                   className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                 >
-                  Request early access
+                  Sign up free
                 </a>
               </>
             )}
@@ -214,11 +214,11 @@ function Navigation() {
                   Sign in
                 </a>
                 <a
-                  href="#access"
+                  href="/signup"
                   className="mt-4 block w-full text-center px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Request early access
+                  Sign up free
                 </a>
               </>
             ) : null}
@@ -249,7 +249,7 @@ function Hero() {
           {/* Left: Copy */}
           <div>
             <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold text-slate-900 leading-tight">
-              Imagine if you could talk to Steam data and get data-driven insights.{' '}
+              Imagine if you could talk to game market data and get data-driven insights.{' '}
               <span className="text-teal-600">Now you can.</span>
             </h1>
             <p className="mt-6 text-lg text-slate-600 leading-relaxed">
@@ -257,10 +257,10 @@ function Hero() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <a
-                href="#access"
+                href="/signup"
                 className="inline-flex items-center justify-center px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
-                Request early access
+                Sign up free
               </a>
               <a
                 href="#features"
@@ -281,7 +281,7 @@ function Hero() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-900">Alex</p>
-                  <p className="text-xs text-slate-500">Steam Market Analyst</p>
+                  <p className="text-xs text-slate-500">Game Market Analyst</p>
                 </div>
               </div>
 
@@ -298,26 +298,23 @@ function Hero() {
                 <div className="flex justify-start">
                   <div className="bg-slate-100 text-slate-800 px-4 py-3 rounded-2xl rounded-bl-md max-w-[90%]">
                     <p className="text-sm leading-relaxed">
-                      Rogue-like games perform best in the <strong>$10-20 tier</strong> with an 18.3% rate reaching 100K+ estimated owners. There are currently 1,847 rogue-like games on Steam with a 73% average rating.
+                      Rogue-like games perform best in the <strong>$10-20 tier</strong> with an 18.3% rate reaching 100K+ estimated owners. There are currently 1,847 rogue-like games with a 73% average rating.
                     </p>
-                    {/* Mini Chart Placeholder */}
+                    {/* Key Stats Summary */}
                     <div className="mt-3 bg-white rounded-lg p-3 border border-slate-200">
-                      <p className="text-xs text-slate-500 mb-2">Success rate by price tier</p>
-                      <div className="flex items-end gap-1 h-12">
-                        <div className="flex-1 bg-slate-200 rounded-t" style={{ height: '40%' }}>
-                          <div className="text-[10px] text-center text-slate-500 mt-1">Free</div>
+                      <p className="text-xs text-slate-500 mb-2">Key findings</p>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">Total games</span>
+                          <span className="font-medium text-slate-900">1,847</span>
                         </div>
-                        <div className="flex-1 bg-slate-200 rounded-t" style={{ height: '50%' }}>
-                          <div className="text-[10px] text-center text-slate-500 mt-1">$5</div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">Avg rating</span>
+                          <span className="font-medium text-slate-900">73%</span>
                         </div>
-                        <div className="flex-1 bg-teal-500 rounded-t" style={{ height: '85%' }}>
-                          <div className="text-[10px] text-center text-white mt-1">$15</div>
-                        </div>
-                        <div className="flex-1 bg-slate-200 rounded-t" style={{ height: '65%' }}>
-                          <div className="text-[10px] text-center text-slate-500 mt-1">$25</div>
-                        </div>
-                        <div className="flex-1 bg-slate-200 rounded-t" style={{ height: '55%' }}>
-                          <div className="text-[10px] text-center text-slate-500 mt-1">$40</div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-600">Best price tier</span>
+                          <span className="font-medium text-teal-600">$10-20</span>
                         </div>
                       </div>
                     </div>
@@ -380,7 +377,6 @@ function TrustStrip() {
 
         {/* Data Source Note */}
         <p className="mt-8 text-center text-xs text-slate-400">
-          Ownership estimates via <a href="https://steamspy.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-300">SteamSpy</a> + metadata from Steam API.
           Ownership figures are estimates based on public data.
         </p>
       </div>
@@ -460,7 +456,7 @@ function FeatureSections() {
                   </div>
                   <div className="bg-teal-50 rounded-lg p-3 border border-teal-100 flex-1">
                     <p className="text-sm text-slate-700">
-                      <strong>1,847 rogue-like games</strong> on Steam with a <strong>73% average rating</strong>.
+                      <strong>1,847 rogue-like games</strong> with a <strong>73% average rating</strong>.
                       About <strong>8.2% reach 100K+ estimated owners</strong> — that's competitive but not oversaturated.
                     </p>
                   </div>
@@ -474,7 +470,7 @@ function FeatureSections() {
         {/* Block 3: Realistic Expectations */}
         <FeatureBlock
           title="Know what success actually looks like."
-          copy="Based on estimated ownership data, ~88% of Steam games have fewer than 100K estimated owners. PlayIntel shows you the distribution to help you set realistic expectations for your situation."
+          copy="Based on estimated ownership data, ~88% of games have fewer than 100K estimated owners. PlayIntel shows you the distribution to help you set realistic expectations for your situation."
           bullets={[
             'Mega (10M+): ~97 games (0.13% of market)',
             'Hit (1M-10M): ~1,353 games (1.75% of market)',
@@ -489,25 +485,21 @@ function FeatureSections() {
               <p className="text-xs text-slate-500 mb-4">Estimated ownership distribution</p>
               <div className="space-y-3">
                 {[
-                  { tier: 'Mega (10M+)', pct: 0.13, count: '97', color: 'bg-purple-500' },
-                  { tier: 'Hit (1M-10M)', pct: 1.75, count: '1,353', color: 'bg-teal-500' },
-                  { tier: 'Success (100K-1M)', pct: 9.73, count: '7,515', color: 'bg-blue-500' },
-                  { tier: 'Moderate (10K-100K)', pct: 88.4, count: '68,309', color: 'bg-slate-300' },
+                  { tier: 'Mega (10M+)', count: '97', pct: '0.13%', highlight: true },
+                  { tier: 'Hit (1M-10M)', count: '1,353', pct: '1.75%', highlight: true },
+                  { tier: 'Success (100K-1M)', count: '7,515', pct: '9.73%', highlight: false },
+                  { tier: 'Moderate (10K-100K)', count: '68,309', pct: '88.4%', highlight: false },
                 ].map((item) => (
-                  <div key={item.tier}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-600">{item.tier}</span>
-                      <span className="text-slate-500">{item.count} games ({item.pct}%)</span>
-                    </div>
-                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full ${item.color} rounded-full`}
-                        style={{ width: `${Math.max(item.pct, 2)}%` }}
-                      ></div>
+                  <div key={item.tier} className={`flex items-center justify-between py-2 px-3 rounded-lg ${item.highlight ? 'bg-white border border-slate-200' : ''}`}>
+                    <span className="text-sm text-slate-700 font-medium">{item.tier}</span>
+                    <div className="text-right">
+                      <span className={`text-sm font-semibold ${item.highlight ? 'text-teal-600' : 'text-slate-900'}`}>{item.count}</span>
+                      <span className="text-xs text-slate-500 ml-2">({item.pct})</span>
                     </div>
                   </div>
                 ))}
               </div>
+              <p className="mt-4 text-xs text-slate-500 text-center">~88% of games have fewer than 100K estimated owners</p>
             </div>
           }
         />
@@ -527,29 +519,28 @@ function FeatureSections() {
           visual={
             <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
               <p className="text-xs text-slate-500 mb-4">Price tier performance (estimated)</p>
-              <div className="space-y-3">
+              {/* Table Header */}
+              <div className="flex items-center gap-2 text-xs text-slate-500 mb-2 px-2">
+                <span className="flex-1">Price Tier</span>
+                <span className="w-16 text-right">Avg Owners</span>
+                <span className="w-12 text-right">Rating</span>
+                <span className="w-14 text-right">Success</span>
+              </div>
+              <div className="space-y-1">
                 {[
-                  { tier: 'Free', owners: '294K', rating: '72%', success: '19%' },
-                  { tier: 'Budget ($0-5)', owners: '43K', rating: '75%', success: '6%' },
-                  { tier: 'Low ($5-10)', owners: '79K', rating: '77%', success: '10%' },
-                  { tier: 'Medium ($10-20)', owners: '182K', rating: '77%', success: '18%' },
-                  { tier: 'Standard ($20-30)', owners: '430K', rating: '76%', success: '35%' },
-                  { tier: 'Premium ($30-50)', owners: '795K', rating: '76%', success: '41%' },
-                  { tier: 'AAA ($50+)', owners: '1.1M', rating: '63%', success: '30%' },
+                  { tier: 'Free', owners: '294K', rating: '72%', success: '19%', best: false },
+                  { tier: 'Budget ($0-5)', owners: '43K', rating: '75%', success: '6%', best: false },
+                  { tier: 'Low ($5-10)', owners: '79K', rating: '77%', success: '10%', best: false },
+                  { tier: 'Medium ($10-20)', owners: '182K', rating: '77%', success: '18%', best: true },
+                  { tier: 'Standard ($20-30)', owners: '430K', rating: '76%', success: '35%', best: false },
+                  { tier: 'Premium ($30-50)', owners: '795K', rating: '76%', success: '41%', best: false },
+                  { tier: 'AAA ($50+)', owners: '1.1M', rating: '63%', success: '30%', best: false },
                 ].map((item) => (
-                  <div key={item.tier} className="flex items-center gap-4 text-xs">
-                    <span className="w-28 text-slate-600">{item.tier}</span>
-                    <span className="w-16 text-right text-slate-700 font-medium">{item.owners}</span>
+                  <div key={item.tier} className={`flex items-center gap-2 text-xs py-2 px-2 rounded-lg ${item.best ? 'bg-teal-50 border border-teal-200' : 'bg-white'}`}>
+                    <span className={`flex-1 ${item.best ? 'text-teal-700 font-medium' : 'text-slate-700'}`}>{item.tier}</span>
+                    <span className={`w-16 text-right font-medium ${item.best ? 'text-teal-600' : 'text-slate-900'}`}>{item.owners}</span>
                     <span className="w-12 text-right text-slate-500">{item.rating}</span>
-                    <div className="flex-1">
-                      <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-teal-500 rounded-full"
-                          style={{ width: item.success }}
-                        ></div>
-                      </div>
-                    </div>
-                    <span className="w-10 text-right text-teal-600 font-medium">{item.success}</span>
+                    <span className={`w-14 text-right font-medium ${item.best ? 'text-teal-600' : 'text-slate-600'}`}>{item.success}</span>
                   </div>
                 ))}
               </div>
@@ -744,7 +735,7 @@ function PricingSection() {
         </div>
 
         <p className="mt-12 text-center text-sm text-slate-500">
-          All plans include access to our full database of 77,274 Steam games.
+          All plans include access to our full database of 77,274 games.
           <br />
           Questions reset on the 1st of each month.
         </p>
@@ -759,7 +750,7 @@ function WhyChoose() {
     {
       icon: <Icons.Eye />,
       title: 'Transparent methodology',
-      description: 'We clearly show our sources (SteamSpy estimates + Steam API metadata), data limitations, and refresh dates. Ownership data is estimated, not actual sales.',
+      description: 'We clearly show our data sources, limitations, and refresh dates. Ownership data is estimated, not actual sales.',
     },
     {
       icon: <Icons.Compass />,
@@ -810,151 +801,49 @@ function WhyChoose() {
 }
 
 
-// --- Access Form ---
-function AccessForm() {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    role: '',
-    project: '',
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formState),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to join waitlist');
-      }
-
-      setSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+// --- Sign Up CTA Section ---
+function SignUpCTA() {
   return (
     <section id="access" className="py-16 lg:py-24 bg-slate-900">
       <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
+        <div className="text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white">
-            Get early access to PlayIntel
+            Ready to make data-driven decisions?
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-            We're onboarding indie teams in batches. Join the waitlist.
+            Start exploring game market data today. Free plan available.
           </p>
-        </div>
 
-        {submitted ? (
-          <div className="bg-teal-900/50 border border-teal-700 rounded-xl p-8 text-center">
-            <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icons.Check />
-            </div>
-            <p className="text-lg font-medium text-white">You're on the list!</p>
-            <p className="mt-2 text-slate-400">We'll be in touch when your spot opens up.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                required
-                value={formState.name}
-                onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                placeholder="Your name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                required
-                value={formState.email}
-                onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-slate-300 mb-1">
-                Role
-              </label>
-              <select
-                id="role"
-                required
-                value={formState.role}
-                onChange={(e) => setFormState({ ...formState, role: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-              >
-                <option value="">Select your role</option>
-                <option value="indie">Indie Developer</option>
-                <option value="studio">Small Studio</option>
-                <option value="publisher">Publisher</option>
-                <option value="analyst">Analyst</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="project" className="block text-sm font-medium text-slate-300 mb-1">
-                What are you building? <span className="text-slate-500">(optional)</span>
-              </label>
-              <input
-                type="text"
-                id="project"
-                value={formState.project}
-                onChange={(e) => setFormState({ ...formState, project: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                placeholder="e.g., Roguelike deckbuilder, early prototype"
-              />
-            </div>
-
-            {error && (
-              <div className="bg-red-900/50 border border-red-700 rounded-lg p-3 text-red-300 text-sm">
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/signup"
+              className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-slate-900"
             >
-              {loading ? 'Joining...' : 'Join the waitlist'}
-            </button>
+              Sign up free
+            </a>
+            <a
+              href="/login"
+              className="inline-flex items-center justify-center px-8 py-4 bg-slate-800 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 transition-colors"
+            >
+              Sign in
+            </a>
+          </div>
 
-            <p className="text-xs text-slate-500 text-center">
-              We'll only email you about access and major updates. No spam.
-            </p>
-          </form>
-        )}
+          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-400">
+            <div className="flex items-center gap-2">
+              <Icons.Check />
+              <span>5 free queries/month</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icons.Check />
+              <span>No credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icons.Check />
+              <span>Access to 77,274 games</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -990,7 +879,7 @@ function Footer() {
               <Logo variant="full" size="sm" />
             </div>
             <p className="text-sm text-slate-400 max-w-xs">
-              AI-powered Steam market intelligence for indie game developers.
+              AI-powered game market intelligence for indie game developers.
             </p>
             <div className="flex gap-4 mt-4">
               {/* Social Placeholders */}
@@ -1052,9 +941,7 @@ function Footer() {
 
         <div className="mt-12 pt-8 border-t border-slate-800">
           <p className="text-xs text-slate-600 text-center max-w-3xl mx-auto mb-4">
-            <strong>Data disclaimer:</strong> Ownership figures shown are estimates derived from{' '}
-            <a href="https://steamspy.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-400">SteamSpy</a>{' '}
-            and do not represent actual sales data. These estimates are based on publicly available information and statistical methods.
+            <strong>Data disclaimer:</strong> Ownership figures shown are estimates and do not represent actual sales data. These estimates are based on publicly available information and statistical methods.
             PlayIntel is designed to help inform decisions, not to provide definitive sales figures.
           </p>
           <p className="text-sm text-slate-500 text-center">
@@ -1080,7 +967,7 @@ export default function LandingPage() {
       <IntegrationsStrip />
       <PricingSection />
       <WhyChoose />
-      <AccessForm />
+      <SignUpCTA />
       <Footer />
     </main>
   );

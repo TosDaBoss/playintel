@@ -7,7 +7,7 @@ import { Logo } from '../components/Logo';
 
 // ============================================================================
 // PLAYINTEL APP - Interactive Chat Interface
-// Connects to the FastAPI backend to query Steam data
+// Connects to the FastAPI backend to query game market data
 // ============================================================================
 
 // --- Configuration ---
@@ -149,7 +149,7 @@ function DataTable({ data }: { data: Record<string, unknown>[] }) {
 
   const columns = Object.keys(data[0]);
   const displayData = expanded ? data : data.slice(0, 5);
-  const showExportButton = data.length > 10;
+  const showExportButton = data.length >= 5; // Show export for any meaningful dataset
 
   return (
     <div className="mt-3 bg-slate-800 rounded-lg overflow-hidden border border-slate-700">
@@ -900,7 +900,7 @@ export default function AppPage() {
                 <span className="text-white text-xs font-bold">A</span>
               </div>
               <span className="font-medium text-white">Alex</span>
-              <span className="text-xs text-slate-500">Steam Market Analyst</span>
+              <span className="text-xs text-slate-500">Game Market Analyst</span>
             </div>
           </div>
 
@@ -938,7 +938,7 @@ export default function AppPage() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-white mb-2">
-                Ask Alex about Steam data
+                Ask Alex about game market data
               </h1>
               <p className="text-slate-400 max-w-md mb-8">
                 I can help you analyse 77,274 games, find pricing insights, explore genres and tags, and benchmark against other developers.
@@ -966,7 +966,7 @@ export default function AppPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about Steam games, pricing, genres, tags..."
+                  placeholder="Ask about games, pricing, genres, tags..."
                   rows={1}
                   className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   disabled={isLoading || connectionStatus === 'disconnected'}
@@ -982,7 +982,7 @@ export default function AppPage() {
               </button>
             </div>
             <div className="flex items-center justify-between text-xs text-slate-500 mt-2">
-              <span>Data from SteamSpy + Steam API</span>
+              <span>77,274 games indexed</span>
               <span className={`font-medium ${getRemainingQueries() <= 2 && getRemainingQueries() !== -1 ? 'text-amber-400' : 'text-slate-400'}`}>
                 {getQueryUsageDisplay()}
               </span>

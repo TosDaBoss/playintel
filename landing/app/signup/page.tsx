@@ -107,35 +107,49 @@ function SignupForm() {
     setIsLoading(true);
 
     try {
-      // Simulate account creation - in production, this would call your API
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Store signup data in Supabase
+      const signupResponse = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          plan: selectedPlan,
+        }),
+      });
 
-      // Generate a temporary user ID for the checkout session
-      const tempUserId = `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const signupData = await signupResponse.json();
+
+      if (!signupResponse.ok) {
+        throw new Error(signupData.error || 'Failed to create account');
+      }
 
       // For paid plans, redirect to Stripe checkout
       if (selectedPlan !== 'free') {
-        const response = await fetch('/api/stripe/checkout', {
+        const checkoutResponse = await fetch('/api/stripe/checkout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             planType: selectedPlan,
-            userId: tempUserId,
+            userId: signupData.userId,
             userEmail: formData.email,
           }),
         });
 
-        const data = await response.json();
+        const checkoutData = await checkoutResponse.json();
 
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to create checkout session');
+        if (!checkoutResponse.ok) {
+          throw new Error(checkoutData.error || 'Failed to create checkout session');
         }
 
         // Redirect to Stripe Checkout
-        if (data.url) {
-          window.location.href = data.url;
+        if (checkoutData.url) {
+          window.location.href = checkoutData.url;
           return;
         } else {
           throw new Error('No checkout URL received');
