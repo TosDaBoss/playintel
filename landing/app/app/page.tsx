@@ -11,8 +11,7 @@ import { Logo } from '../components/Logo';
 // ============================================================================
 
 // --- Configuration ---
-// TODO: Update this to your production API URL when deploying
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // --- Types ---
 interface Message {
