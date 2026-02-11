@@ -18,7 +18,7 @@ const PLANS = [
   {
     tier: 'indie',
     name: 'Indie',
-    price: '$29',
+    price: '$19',
     period: '/month',
     queries: '150 queries/month',
     features: ['150 queries per month', 'Full market intelligence', 'Unlimited CSV exports', 'Chat history'],
@@ -27,7 +27,7 @@ const PLANS = [
   {
     tier: 'studio',
     name: 'Studio',
-    price: '$69',
+    price: '$59',
     period: '/user/month',
     queries: 'Unlimited',
     features: ['Unlimited queries', 'Everything in Indie', 'Team collaboration', 'API access (coming soon)'],

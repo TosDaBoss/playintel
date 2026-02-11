@@ -621,7 +621,7 @@ function PricingSection() {
     },
     {
       name: 'Indie',
-      price: '$29',
+      price: '$19',
       period: '/month',
       description: 'Perfect for solo developers and small teams',
       queries: '150 queries/month',
@@ -638,7 +638,7 @@ function PricingSection() {
     },
     {
       name: 'Studio',
-      price: '$69',
+      price: '$59',
       period: '/user/month',
       description: 'For studios that need unlimited insights',
       queries: 'Unlimited queries',
