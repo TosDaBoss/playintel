@@ -428,7 +428,7 @@ function FeatureBlock({ title, copy, bullets, cta, ctaHref, reversed, visual }: 
 // --- Feature Sections ---
 function FeatureSections() {
   return (
-    <section id="pricing" className="py-16 lg:py-24 bg-white">
+    <section id="features" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
         {/* Block 1: Conversational Analysis */}
         <FeatureBlock
@@ -798,7 +798,7 @@ function SignUpCTA() {
           <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-400">
             <div className="flex items-center gap-2">
               <Icons.Check />
-              <span>5 free queries/month</span>
+              <span>30 free queries/month</span>
             </div>
             <div className="flex items-center gap-2">
               <Icons.Check />
