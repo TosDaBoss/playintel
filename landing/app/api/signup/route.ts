@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
         name: name.trim(),
         plan: plan,
         queries_used: 0,
-        query_limit: plan === 'free' ? 5 : plan === 'indie' ? 150 : -1,
+        query_limit: plan === 'free' ? 30 : plan === 'indie' ? 150 : -1,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         // Don't store plain password - this is for signup tracking

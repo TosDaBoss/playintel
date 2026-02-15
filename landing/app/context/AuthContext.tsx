@@ -22,7 +22,7 @@ export interface User {
 
 // Plan configurations
 export const PLAN_LIMITS: Record<PlanTier, number> = {
-  free: 5,
+  free: 30,
   indie: 150,
   studio: -1, // unlimited
 };

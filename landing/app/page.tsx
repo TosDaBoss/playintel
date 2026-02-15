@@ -607,51 +607,17 @@ function PricingSection() {
       name: 'Free',
       price: '$0',
       period: 'forever',
-      description: 'Try PlayIntel with limited queries',
-      queries: '5 queries/month',
+      description: 'Get started with PlayIntel - no credit card required',
+      queries: '30 queries/month',
       features: [
-        '5 queries per month',
+        '30 queries per month',
         'Access to all 77,274 games',
-        'Basic market insights',
-        'CSV export (limited)',
+        'Full market insights',
+        'CSV export',
       ],
-      cta: 'Get Started',
+      cta: 'Create Free Account',
       ctaHref: '/signup?plan=free',
-      highlighted: false,
-    },
-    {
-      name: 'Indie',
-      price: '$19',
-      period: '/month',
-      description: 'Perfect for solo developers and small teams',
-      queries: '150 queries/month',
-      features: [
-        '150 queries per month',
-        'Full market intelligence',
-        'Unlimited CSV exports',
-        'Chat history & saved insights',
-        'Priority response times',
-      ],
-      cta: 'Start Indie Plan',
-      ctaHref: '/signup?plan=indie',
       highlighted: true,
-    },
-    {
-      name: 'Studio',
-      price: '$59',
-      period: '/user/month',
-      description: 'For studios that need unlimited insights',
-      queries: 'Unlimited queries',
-      features: [
-        'Unlimited queries',
-        'Everything in Indie',
-        'Team collaboration',
-        'API access (coming soon)',
-        'Dedicated support',
-      ],
-      cta: 'Start Studio Plan',
-      ctaHref: '/signup?plan=studio',
-      highlighted: false,
     },
   ];
 
@@ -660,14 +626,14 @@ function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
-            Simple, transparent pricing
+            Get Started for Free
           </h2>
           <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-            Start free, upgrade when you need more. No hidden fees.
+            Create your free account and start exploring game market data. No credit card required.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="flex justify-center max-w-md mx-auto">
           {tiers.map((tier) => (
             <div
               key={tier.name}

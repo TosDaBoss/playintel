@@ -47,6 +47,20 @@ def get_db_connection():
 
 def get_interpretation_prompt(question: str, data: list, data_count: int) -> str:
     """Generate the interpretation prompt for Claude with improved variety and rules."""
+
+    # Check if user is asking for a chart/visualization
+    question_lower = question.lower()
+    chart_keywords = ['chart', 'graph', 'plot', 'visualize', 'visualization', 'show me a chart', 'bar chart', 'pie chart']
+    user_wants_chart = any(kw in question_lower for kw in chart_keywords)
+
+    chart_instruction = ""
+    if user_wants_chart:
+        chart_instruction = """
+CHART REQUEST DETECTED:
+The system automatically generates charts from this data. A visualization will appear alongside your text response.
+DO NOT say "I cannot generate charts" or "I don't have chart capability" - the chart IS being generated.
+Simply provide your text analysis of the data. The chart will be displayed automatically."""
+
     return f"""Answer this Steam market question directly.
 
 Question: "{question}"
@@ -54,6 +68,7 @@ Question: "{question}"
 Data:
 {json.dumps(data[:50], indent=2)}
 {"(Showing first 50 of " + str(data_count) + " results)" if data_count > 50 else ""}
+{chart_instruction}
 
 CRITICAL RULES:
 1. START WITH THE ANSWER - No preamble, no "Great question!", no self-introduction
@@ -62,6 +77,7 @@ CRITICAL RULES:
 4. NEVER use filler phrases: "Certainly!", "Absolutely!", "I'd be happy to", "Great question"
 5. Use "you/your" when addressing the user directly
 6. If data is missing, pivot smoothly: "Review counts suggest..." not "I don't have that data"
+7. NEVER say you cannot generate charts/graphs - the system handles visualization automatically
 
 RESPONSE PATTERNS - Match to question type:
 
@@ -192,8 +208,8 @@ def get_database_schema():
 
     PREFER aggregate tables for common questions:
     - "What's the average for X price tier?" → agg_price_tier_stats
-    - "How many roguelike games?" → agg_tag_stats WHERE tag = 'Rogue-like'
-    - "Best price for action games?" → agg_genre_price_performance WHERE genre = 'Action'
+    - "How many roguelike games?" → agg_tag_stats WHERE tag ILIKE '%rogue%'
+    - "Best price for action games?" → agg_genre_price_performance WHERE genre ILIKE '%action%'
     - "What rating do successful games have?" → agg_ownership_tier_stats
     - "Compare review categories" → agg_review_tier_stats
 
@@ -202,15 +218,51 @@ def get_database_schema():
     - Custom filtering not in aggregate tables
     - Getting individual game details
 
-    IMPORTANT TAG NOTES:
-    - Tags like "Roguelike" are stored as "Rogue-like" or "Rogue-lite" (with hyphens)
-    - Tags are case-sensitive in aggregate tables
+    CRITICAL - ALWAYS USE CASE-INSENSITIVE QUERIES:
+    - Tags are stored with Title Case and hyphens (e.g., "Rogue-like", "Roguelike Deckbuilder", "Farming Sim")
+    - ALWAYS use ILIKE for tag/genre matching: WHERE tag ILIKE '%roguelike%' or WHERE tag ILIKE '%rogue%'
+    - NEVER use exact case-sensitive matches like WHERE tag = 'roguelike' (will return 0 results!)
+    - For multiple terms, use: WHERE tag ILIKE '%rogue%' AND tag ILIKE '%deck%'
+
+    COMMON TAG MAPPINGS (use ILIKE with these patterns):
+    - Roguelike/Roguelite → '%rogue%' (matches: Rogue-like, Rogue-lite, Action Roguelike, Roguelike Deckbuilder)
+    - Farming/Farming Sim → '%farm%' (matches: Farming, Farming Sim)
+    - Horror → '%horror%' (matches: Horror, Survival Horror, Psychological Horror)
+    - Deckbuilder → '%deck%' or '%deckbuilder%' (matches: Roguelike Deckbuilder, Deckbuilding)
+
+    MULTI-GENRE/TAG COMPARISON QUERIES:
+    When comparing multiple genres/tags, use UNION ALL to get data for each.
+    IMPORTANT: Use agg_tag_stats for specific niches (roguelike, farming sim) and agg_genre_stats for broad genres.
+
+    VERIFIED EXACT TAG NAMES IN DATABASE (ALWAYS use these exact values):
+    - 'Roguelike Deckbuilder' (324 games) - MUST use: tag = 'Roguelike Deckbuilder'
+    - 'Farming Sim' (624 games) - MUST use: tag = 'Farming Sim'
+    - 'Horror' (6487 games) - MUST use: tag = 'Horror'
+    - 'Survival Horror' (1972 games) - MUST use: tag = 'Survival Horror'
+    - 'Psychological Horror' (3604 games) - MUST use: tag = 'Psychological Horror'
+    - 'Rogue-like' (3267 games) - MUST use: tag = 'Rogue-like'
+    - 'Rogue-lite' (3272 games) - MUST use: tag = 'Rogue-lite'
+    - 'Action Roguelike' (2758 games) - MUST use: tag = 'Action Roguelike'
+    - 'Deckbuilding' (819 games) - MUST use: tag = 'Deckbuilding'
+    - 'Farming' (97 games) - Note: smaller than 'Farming Sim'
+
+    Example: "Compare roguelike deckbuilder, farming sim, and horror games"
+    SELECT 'Roguelike Deckbuilder' as category, game_count, avg_rating, avg_owners, success_rate_100k
+    FROM agg_tag_stats WHERE tag = 'Roguelike Deckbuilder'
+    UNION ALL
+    SELECT 'Farming Sim' as category, game_count, avg_rating, avg_owners, success_rate_100k
+    FROM agg_tag_stats WHERE tag = 'Farming Sim'
+    UNION ALL
+    SELECT 'Horror' as category, game_count, avg_rating, avg_owners, success_rate_100k
+    FROM agg_tag_stats WHERE tag = 'Horror'
+
+    CRITICAL: Use exact tag names with = operator, NOT ILIKE patterns!
     """
 
 
 # Plan tier configurations
 PLAN_LIMITS = {
-    'free': 5,
+    'free': 30,
     'indie': 150,
     'studio': -1,  # unlimited
 }
@@ -941,10 +993,28 @@ Respond ONLY with valid JSON:
 
                         user_answer = interpretation_response.content[0].text
 
+                        # Check if user wants data displayed (table/export) or if query returns game-level details
+                        question_lower = request.question.lower()
+
+                        # Keywords that indicate user wants to see/export data
+                        table_keywords = ['table', 'list', 'show me all', 'show all', 'give me a list', 'export', 'csv', 'spreadsheet', 'detailed breakdown']
+
+                        # Keywords that indicate query returns game-level data worth showing
+                        detail_keywords = ['top', 'best', 'worst', 'compare', 'vs', 'versus', 'examples', 'games like', 'similar to', 'highest', 'lowest']
+
+                        wants_table = any(kw in question_lower for kw in table_keywords)
+                        has_detail_query = any(kw in question_lower for kw in detail_keywords)
+
+                        # Keep data if: user asked for table/export, OR query returns game details, OR data has game names
+                        has_game_names = data and len(data) > 0 and any(key in str(data[0].keys()).lower() for key in ['name', 'game', 'title'])
+
+                        # Only hide data for pure aggregate queries (averages, counts, totals)
+                        if not (wants_table or has_detail_query or has_game_names):
+                            data = None  # Don't send raw data for aggregate-only queries
+
                         # If we have chart data, add offer to user's response
-                        if chart_config and len(data) >= 3:
+                        if chart_config and len(data or []) >= 3:
                             # Only offer chart if not already explicitly requested
-                            question_lower = request.question.lower()
                             chart_keywords = ['chart', 'graph', 'plot', 'visualize', 'visualization']
                             if not any(kw in question_lower for kw in chart_keywords):
                                 user_answer += "\n\n*Would you like me to visualize this data as a chart?*"
@@ -1029,9 +1099,27 @@ Response format:
 
                                 user_answer = interpretation_response.content[0].text
 
+                                # Check if user wants data displayed (table/export) or if query returns game-level details
+                                question_lower = request.question.lower()
+
+                                # Keywords that indicate user wants to see/export data
+                                table_keywords = ['table', 'list', 'show me all', 'show all', 'give me a list', 'export', 'csv', 'spreadsheet', 'detailed breakdown']
+
+                                # Keywords that indicate query returns game-level data worth showing
+                                detail_keywords = ['top', 'best', 'worst', 'compare', 'vs', 'versus', 'examples', 'games like', 'similar to', 'highest', 'lowest']
+
+                                wants_table = any(kw in question_lower for kw in table_keywords)
+                                has_detail_query = any(kw in question_lower for kw in detail_keywords)
+
+                                # Keep data if: user asked for table/export, OR query returns game details, OR data has game names
+                                has_game_names = data and len(data) > 0 and any(key in str(data[0].keys()).lower() for key in ['name', 'game', 'title'])
+
+                                # Only hide data for pure aggregate queries (averages, counts, totals)
+                                if not (wants_table or has_detail_query or has_game_names):
+                                    data = None  # Don't send raw data for aggregate-only queries
+
                                 # If we have chart data, add offer to user's response
-                                if chart_config and len(data) >= 3:
-                                    question_lower = request.question.lower()
+                                if chart_config and len(data or []) >= 3:
                                     chart_keywords = ['chart', 'graph', 'plot', 'visualize', 'visualization']
                                     if not any(kw in question_lower for kw in chart_keywords):
                                         user_answer += "\n\n*Would you like me to visualize this data as a chart?*"

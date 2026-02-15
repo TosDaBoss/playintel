@@ -18,53 +18,17 @@ const PLANS = [
     name: 'Free',
     price: '$0',
     period: 'forever',
-    description: 'Try PlayIntel with limited queries',
-    queries: '5 queries/month',
+    description: 'Get started with PlayIntel - no credit card required',
+    queries: '30 queries/month',
     features: [
-      '5 queries per month',
+      '30 queries per month',
       'Access to all 77,274 games',
-      'Basic market insights',
-      'CSV export (limited)',
+      'Full market insights',
+      'CSV export',
     ],
-    cta: 'Get Started Free',
-    highlighted: false,
-    stripePlan: false,
-  },
-  {
-    id: 'indie',
-    name: 'Indie',
-    price: '$19',
-    period: '/month',
-    description: 'Perfect for solo developers and small teams',
-    queries: '150 queries/month',
-    features: [
-      '150 queries per month',
-      'Full market intelligence',
-      'Unlimited CSV exports',
-      'Chat history & saved insights',
-      'Priority response times',
-    ],
-    cta: 'Subscribe to Indie',
+    cta: 'Create Free Account',
     highlighted: true,
-    stripePlan: true,
-  },
-  {
-    id: 'studio',
-    name: 'Studio',
-    price: '$59',
-    period: '/user/month',
-    description: 'For studios that need unlimited insights',
-    queries: 'Unlimited queries',
-    features: [
-      'Unlimited queries',
-      'Everything in Indie',
-      'Team collaboration',
-      'API access (coming soon)',
-      'Dedicated support',
-    ],
-    cta: 'Subscribe to Studio',
-    highlighted: false,
-    stripePlan: true,
+    stripePlan: false,
   },
 ];
 
@@ -171,10 +135,10 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-slate-900">
-              Simple, transparent pricing
+              Get Started
             </h1>
             <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-              Start free, upgrade when you need more. No hidden fees. Cancel anytime.
+              Create your free account and start exploring game market data. No credit card required.
             </p>
           </div>
 
@@ -186,7 +150,7 @@ export default function PricingPage() {
           )}
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="flex justify-center max-w-md mx-auto">
             {PLANS.map((plan) => (
               <div
                 key={plan.id}
