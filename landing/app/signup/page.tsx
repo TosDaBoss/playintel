@@ -201,11 +201,6 @@ function SignupForm() {
                       : 'border-slate-200 hover:border-slate-300 bg-white'
                   }`}
                 >
-                  {plan.popular && (
-                    <span className="absolute -top-2.5 left-4 px-2 py-0.5 bg-teal-600 text-white text-xs font-medium rounded-full">
-                      Most Popular
-                    </span>
-                  )}
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
