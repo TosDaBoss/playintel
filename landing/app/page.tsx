@@ -682,8 +682,14 @@ function TryNowCTA() {
 }
 
 // --- Footer ---
+interface FooterLink {
+  label: string;
+  href: string;
+  note?: string;
+}
+
 function Footer() {
-  const links = {
+  const links: { product: FooterLink[]; resources: FooterLink[]; company: FooterLink[] } = {
     product: [
       { label: 'Features', href: '#features' },
       { label: 'Try Now', href: '/app' },
