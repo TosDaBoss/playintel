@@ -500,6 +500,7 @@ function Sidebar({
   onNewChat,
   user,
   onLogout,
+  isGuest,
   chatSessions,
   currentChatId,
   onSelectChat,
@@ -511,6 +512,7 @@ function Sidebar({
   onNewChat: () => void;
   user: UserInfo | null;
   onLogout: () => void;
+  isGuest: boolean;
   chatSessions: ChatSession[];
   currentChatId: string | null;
   onSelectChat: (chatId: string) => void;
@@ -591,8 +593,28 @@ function Sidebar({
             )}
           </div>
 
-          {/* User Info */}
-          {user && (
+          {/* User Info or Guest Signup */}
+          {isGuest ? (
+            <div className="p-3 border-t border-slate-800">
+              <div className="bg-slate-800 rounded-lg p-3">
+                <p className="text-xs text-slate-400 mb-2">
+                  Sign up for free to get 30 queries/month
+                </p>
+                <a
+                  href="/signup"
+                  className="block w-full px-3 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-500 transition-colors text-center"
+                >
+                  Sign up free
+                </a>
+                <a
+                  href="/login"
+                  className="block w-full mt-2 px-3 py-2 text-slate-400 text-sm text-center hover:text-white transition-colors"
+                >
+                  Already have an account? Sign in
+                </a>
+              </div>
+            </div>
+          ) : user && (
             <div className="p-3 border-t border-slate-800">
               <UserMenu user={user} onLogout={onLogout} />
             </div>
@@ -627,6 +649,8 @@ export default function AppPage() {
     isAuthenticated,
     isLoading: authLoading,
     logout,
+    isGuest,
+    initGuestSession,
     canQuery,
     getRemainingQueries,
     incrementQueryCount,
@@ -642,12 +666,12 @@ export default function AppPage() {
   } = useAuth();
   const router = useRouter();
 
-  // Redirect to login if not authenticated
+  // Initialize guest session if not authenticated
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      initGuestSession();
     }
-  }, [authLoading, isAuthenticated, router]);
+  }, [authLoading, isAuthenticated]);
 
   // Load messages when currentChatId changes
   useEffect(() => {
@@ -685,8 +709,8 @@ export default function AppPage() {
     }
   }, [input]);
 
-  // Show loading state while checking auth
-  if (authLoading) {
+  // Show loading state while checking auth or initializing guest
+  if (authLoading || !isAuthenticated) {
     return (
       <div className="flex h-screen bg-slate-950 items-center justify-center">
         <div className="flex flex-col items-center gap-4">
@@ -695,11 +719,6 @@ export default function AppPage() {
         </div>
       </div>
     );
-  }
-
-  // Don't render if not authenticated (will redirect)
-  if (!isAuthenticated) {
-    return null;
   }
 
   async function checkConnection() {
@@ -723,7 +742,9 @@ export default function AppPage() {
       const limitMessage: Message = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: `You've reached your monthly query limit. ${user?.plan === 'free' ? 'Upgrade to Indie ($25/mo) for 150 queries or Studio ($59/mo) for unlimited queries.' : 'Your queries will reset on the 1st of next month.'}`,
+        content: isGuest
+          ? `You've used all your free trial queries! Sign up for a free account to get 30 queries per month.`
+          : `You've reached your monthly query limit. Your queries will reset on the 1st of next month.`,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, {
@@ -876,6 +897,7 @@ export default function AppPage() {
         onNewChat={handleNewChat}
         user={user}
         onLogout={logout}
+        isGuest={isGuest}
         chatSessions={chatSessions}
         currentChatId={currentChatId}
         onSelectChat={handleSelectChat}
@@ -983,7 +1005,7 @@ export default function AppPage() {
             <div className="flex items-center justify-between text-xs text-slate-500 mt-2">
               <span>77,274 games indexed</span>
               <span className={`font-medium ${getRemainingQueries() <= 2 && getRemainingQueries() !== -1 ? 'text-amber-400' : 'text-slate-400'}`}>
-                {getQueryUsageDisplay()}
+                {isGuest ? `${getRemainingQueries()} trial queries left` : getQueryUsageDisplay()}
               </span>
             </div>
           </div>

@@ -63,6 +63,9 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   isAuthenticated: boolean;
+  isGuest: boolean;
+  // Guest mode
+  initGuestSession: () => void;
   // Query tracking
   canQuery: () => boolean;
   getRemainingQueries: () => number;
@@ -152,6 +155,10 @@ const SESSION_KEY = 'playintel_session';
 const CHAT_HISTORY_KEY = 'playintel_chat_history';
 const CURRENT_CHAT_KEY = 'playintel_current_chat';
 const QUERY_USAGE_KEY = 'playintel_query_usage';
+const GUEST_SESSION_KEY = 'playintel_guest_session';
+
+// Guest user configuration
+const GUEST_QUERY_LIMIT = 5; // Limited queries for guests to encourage signup
 
 function generateToken(): string {
   return 'pi_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -175,6 +182,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+  const [isGuest, setIsGuest] = useState(false);
 
   // Load session and chat history from localStorage on mount
   useEffect(() => {
@@ -261,8 +269,77 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSession(null);
     setChatSessions([]);
     setCurrentChatId(null);
+    setIsGuest(false);
     localStorage.removeItem(SESSION_KEY);
   };
+
+  // Initialize guest session for "Try Now" functionality
+  const initGuestSession = () => {
+    // Check if guest session already exists
+    const storedGuest = localStorage.getItem(GUEST_SESSION_KEY);
+    let guestUser: User;
+
+    if (storedGuest) {
+      try {
+        const parsed = JSON.parse(storedGuest);
+        // Check if we need to reset queries (new month)
+        const now = new Date();
+        const resetDate = new Date(parsed.queryResetDate);
+
+        if (now >= resetDate) {
+          // Reset queries for new month
+          parsed.queriesUsed = 0;
+          parsed.queryResetDate = getNextQueryResetDate();
+        }
+        guestUser = parsed;
+      } catch {
+        // Create new guest user
+        guestUser = createGuestUser();
+      }
+    } else {
+      guestUser = createGuestUser();
+    }
+
+    // Save guest user
+    localStorage.setItem(GUEST_SESSION_KEY, JSON.stringify(guestUser));
+
+    // Create session for guest
+    const guestSession: Session = {
+      user: guestUser,
+      token: generateToken(),
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 1 day
+    };
+
+    setSession(guestSession);
+    setIsGuest(true);
+
+    // Load guest chat history
+    const chatHistoryKey = `${CHAT_HISTORY_KEY}_${guestUser.id}`;
+    const storedChats = localStorage.getItem(chatHistoryKey);
+    if (storedChats) {
+      setChatSessions(JSON.parse(storedChats));
+    }
+
+    // Load current chat id
+    const currentChatKey = `${CURRENT_CHAT_KEY}_${guestUser.id}`;
+    const storedCurrentChat = localStorage.getItem(currentChatKey);
+    if (storedCurrentChat) {
+      setCurrentChatId(storedCurrentChat);
+    }
+  };
+
+  function createGuestUser(): User {
+    return {
+      id: 'guest_' + Math.random().toString(36).substring(2),
+      email: 'guest@playintel.io',
+      name: 'Guest User',
+      plan: 'free',
+      queriesUsed: 0,
+      queryLimit: GUEST_QUERY_LIMIT,
+      queryResetDate: getNextQueryResetDate(),
+      createdAt: new Date().toISOString(),
+    };
+  }
 
   // Query tracking functions
   const canQuery = (): boolean => {
@@ -327,14 +404,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     setSession(updatedSession);
-    localStorage.setItem(SESSION_KEY, JSON.stringify(updatedSession));
 
-    // Also save to dedicated query usage storage
-    const queryUsageKey = `${QUERY_USAGE_KEY}_${session.user.id}`;
-    localStorage.setItem(queryUsageKey, JSON.stringify({
-      queriesUsed: newQueriesUsed,
-      queryResetDate: newResetDate,
-    }));
+    // Save to appropriate storage based on user type
+    if (isGuest) {
+      localStorage.setItem(GUEST_SESSION_KEY, JSON.stringify(updatedSession.user));
+    } else {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(updatedSession));
+      // Also save to dedicated query usage storage
+      const queryUsageKey = `${QUERY_USAGE_KEY}_${session.user.id}`;
+      localStorage.setItem(queryUsageKey, JSON.stringify({
+        queriesUsed: newQueriesUsed,
+        queryResetDate: newResetDate,
+      }));
+    }
   };
 
   const getQueryUsageDisplay = (): string => {
@@ -460,6 +542,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         logout,
         isAuthenticated: !!session,
+        isGuest,
+        initGuestSession,
         canQuery,
         getRemainingQueries,
         incrementQueryCount,
