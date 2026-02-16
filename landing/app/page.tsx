@@ -81,7 +81,6 @@ function Navigation() {
 
   const navLinks = [
     { href: '#features', label: 'Features' },
-    { href: '#plans', label: 'Pricing' },
     { href: '#why', label: 'Why PlayIntel' },
   ];
 
@@ -139,20 +138,12 @@ function Navigation() {
                 </button>
               </>
             ) : (
-              <>
-                <a
-                  href="/login"
-                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  Sign in
-                </a>
-                <a
-                  href="/signup"
-                  className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-                >
-                  Sign up free
-                </a>
-              </>
+              <a
+                href="/app"
+                className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              >
+                Try Now
+              </a>
             )}
           </div>
 
@@ -205,22 +196,13 @@ function Navigation() {
                 </button>
               </>
             ) : !isLoading ? (
-              <>
-                <a
-                  href="/login"
-                  className="block py-2 text-slate-600 hover:text-slate-900"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign in
-                </a>
-                <a
-                  href="/signup"
-                  className="mt-4 block w-full text-center px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign up free
-                </a>
-              </>
+              <a
+                href="/app"
+                className="mt-4 block w-full text-center px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Try Now
+              </a>
             ) : null}
           </div>
         )}
@@ -257,10 +239,10 @@ function Hero() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <a
-                href="/signup"
+                href="/app"
                 className="inline-flex items-center justify-center px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
-                Sign up free
+                Try Now
               </a>
               <a
                 href="#features"
@@ -600,116 +582,6 @@ function IntegrationsStrip() {
   );
 }
 
-// --- Pricing Section ---
-function PricingSection() {
-  const tiers = [
-    {
-      name: 'Free',
-      price: '$0',
-      period: 'forever',
-      description: 'Get started with PlayIntel - no credit card required',
-      queries: '30 queries/month',
-      features: [
-        '30 queries per month',
-        'Access to all 77,274 games',
-        'Full market insights',
-        'CSV export',
-      ],
-      cta: 'Create Free Account',
-      ctaHref: '/signup?plan=free',
-      highlighted: true,
-    },
-  ];
-
-  return (
-    <section id="plans" className="py-16 lg:py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
-            Get Started for Free
-          </h2>
-          <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-            Create your free account and start exploring game market data. No credit card required.
-          </p>
-        </div>
-
-        <div className="flex justify-center max-w-md mx-auto">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`relative rounded-2xl p-8 ${
-                tier.highlighted
-                  ? 'bg-teal-600 text-white shadow-xl scale-105'
-                  : 'bg-white text-slate-900 border border-slate-200 shadow-sm'
-              }`}
-            >
-              {tier.highlighted && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-teal-500 text-white text-xs font-semibold rounded-full">
-                  Most Popular
-                </div>
-              )}
-              <div className="text-center mb-6">
-                <h3 className={`text-xl font-bold ${tier.highlighted ? 'text-white' : 'text-slate-900'}`}>
-                  {tier.name}
-                </h3>
-                <div className="mt-4 flex items-baseline justify-center gap-1">
-                  <span className={`text-4xl font-bold ${tier.highlighted ? 'text-white' : 'text-slate-900'}`}>
-                    {tier.price}
-                  </span>
-                  <span className={`text-sm ${tier.highlighted ? 'text-teal-100' : 'text-slate-500'}`}>
-                    {tier.period}
-                  </span>
-                </div>
-                <p className={`mt-2 text-sm ${tier.highlighted ? 'text-teal-100' : 'text-slate-500'}`}>
-                  {tier.description}
-                </p>
-              </div>
-
-              <div className={`mb-6 py-3 px-4 rounded-lg text-center ${
-                tier.highlighted ? 'bg-teal-500' : 'bg-slate-50'
-              }`}>
-                <span className={`font-semibold ${tier.highlighted ? 'text-white' : 'text-teal-600'}`}>
-                  {tier.queries}
-                </span>
-              </div>
-
-              <ul className="space-y-3 mb-8">
-                {tier.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className={tier.highlighted ? 'text-teal-200' : 'text-teal-600'}>
-                      <Icons.Check />
-                    </span>
-                    <span className={`text-sm ${tier.highlighted ? 'text-teal-50' : 'text-slate-600'}`}>
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href={tier.ctaHref}
-                className={`block w-full py-3 px-4 rounded-lg font-medium text-center transition-colors ${
-                  tier.highlighted
-                    ? 'bg-white text-teal-600 hover:bg-teal-50'
-                    : 'bg-teal-600 text-white hover:bg-teal-700'
-                }`}
-              >
-                {tier.cta}
-              </a>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-12 text-center text-sm text-slate-500">
-          All plans include access to our full database of 77,274 games.
-          <br />
-          Questions reset on the 1st of each month.
-        </p>
-      </div>
-    </section>
-  );
-}
-
 // --- Why Choose Section ---
 function WhyChoose() {
   const reasons = [
@@ -767,8 +639,8 @@ function WhyChoose() {
 }
 
 
-// --- Sign Up CTA Section ---
-function SignUpCTA() {
+// --- Try Now CTA Section ---
+function TryNowCTA() {
   return (
     <section id="access" className="py-16 lg:py-24 bg-slate-900">
       <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -777,36 +649,30 @@ function SignUpCTA() {
             Ready to make data-driven decisions?
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-            Start exploring game market data today. Free plan available.
+            Start exploring game market data today. No signup required.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-8 flex justify-center">
             <a
-              href="/signup"
+              href="/app"
               className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-slate-900"
             >
-              Sign up free
-            </a>
-            <a
-              href="/login"
-              className="inline-flex items-center justify-center px-8 py-4 bg-slate-800 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 transition-colors"
-            >
-              Sign in
+              Try Now
             </a>
           </div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-400">
             <div className="flex items-center gap-2">
               <Icons.Check />
-              <span>30 free queries/month</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Icons.Check />
-              <span>No credit card required</span>
+              <span>No signup required</span>
             </div>
             <div className="flex items-center gap-2">
               <Icons.Check />
               <span>Access to 77,274 games</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icons.Check />
+              <span>Instant answers</span>
             </div>
           </div>
         </div>
@@ -820,7 +686,7 @@ function Footer() {
   const links = {
     product: [
       { label: 'Features', href: '#features' },
-      { label: 'Pricing', href: '#', note: 'Coming soon' },
+      { label: 'Try Now', href: '/app' },
       { label: 'Changelog', href: '#' },
     ],
     resources: [
@@ -931,9 +797,8 @@ export default function LandingPage() {
       <TrustStrip />
       <FeatureSections />
       <IntegrationsStrip />
-      <PricingSection />
       <WhyChoose />
-      <SignUpCTA />
+      <TryNowCTA />
       <Footer />
     </main>
   );
