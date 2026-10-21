@@ -41,8 +41,15 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def get_db_connection():
-    """Create a database connection."""
-    return psycopg.connect(DATABASE_URL)
+    """Create a read-only database connection.
+
+    Every query in this app reads analytics tables, and /api/chat executes
+    model-written SQL, so the session refuses writes and long-running queries.
+    Pair with the playintel_reader role (create_readonly_role.sql) for real safety.
+    """
+    conn = psycopg.connect(DATABASE_URL, options="-c statement_timeout=15000")
+    conn.read_only = True
+    return conn
 
 
 def get_interpretation_prompt(question: str, data: list, data_count: int) -> str:

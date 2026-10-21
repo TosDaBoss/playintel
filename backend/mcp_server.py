@@ -191,8 +191,11 @@ def find_games(name: Optional[str] = None, tag: Optional[str] = None,
 @mcp.tool()
 def developer_benchmark(developer: str) -> dict:
     """Benchmark a developer (3+ games): totals, average owners per game, best game."""
-    return _query("SELECT * FROM agg_developer_stats WHERE developer ILIKE %s LIMIT 20",
-                  (f"%{developer}%",))
+    return _query(
+        """SELECT * FROM agg_developer_stats WHERE developer ILIKE %s
+           ORDER BY (developer ILIKE %s) DESC, total_owners DESC LIMIT 20""",
+        (f"%{developer}%", developer),
+    )
 
 
 @mcp.tool()
@@ -215,12 +218,45 @@ def run_sql(sql: str) -> dict:
     if ";" in stripped or not re.match(r"^\s*(select|with)\b", stripped, re.I) \
             or _FORBIDDEN.search(stripped):
         return {"error": "Only a single SELECT/WITH statement is allowed."}
-    return _query(stripped)
+    try:
+        return _query(stripped)
+    except psycopg.Error as e:
+        # Hand the message back so the model can correct its SQL and retry
+        return {"error": str(e).strip().splitlines()[0], "hint": "Check playintel://schema"}
+
+
+# ---------- HTTP hosting ----------
+
+def http_app():
+    """ASGI app for hosting (Railway/Render/Fly). Stateless so it can scale out.
+
+    If MCP_API_KEY is set, every /mcp request must send
+    `Authorization: Bearer <MCP_API_KEY>`. That suits Claude Code, Cursor and
+    testing; Claude.ai / ChatGPT custom connectors need OAuth (next phase).
+    """
+    import hmac
+    from starlette.responses import JSONResponse
+
+    app = mcp.streamable_http_app(stateless_http=True, json_response=True, host="0.0.0.0")
+    api_key = os.getenv("MCP_API_KEY")
+
+    async def guarded(scope, receive, send):
+        if scope["type"] == "http":
+            if scope["path"] == "/health":
+                return await JSONResponse({"status": "ok"})(scope, receive, send)
+            if api_key:
+                auth = dict(scope.get("headers") or []).get(b"authorization", b"").decode()
+                if not hmac.compare_digest(auth, f"Bearer {api_key}"):
+                    return await JSONResponse({"error": "unauthorized"}, status_code=401)(
+                        scope, receive, send)
+        await app(scope, receive, send)
+
+    return guarded
 
 
 if __name__ == "__main__":
     if os.getenv("MCP_TRANSPORT", "stdio") == "http":
-        mcp.run(transport="streamable-http", host="0.0.0.0",
-                port=int(os.getenv("PORT", "8001")))
+        import uvicorn
+        uvicorn.run(http_app(), host="0.0.0.0", port=int(os.getenv("PORT", "8001")))
     else:
         mcp.run()
