@@ -55,11 +55,13 @@ class JwtVerifier:
 
     def _allowed(self, claims: dict) -> bool:
         email = str(claims.get("email") or "").lower()
-        if not email or claims.get("email_verified") is False:
-            # No email means the WorkOS JWT template is missing: {"email": {{ user.email }}}
+        if email and claims.get("email_verified") is False:
             return False
         if not self.allowed_emails and not self.allowed_domain:
+            # Open sign-up: any WorkOS user, even without the {"email": {{ user.email }}} JWT template
             return True
+        if not email:
+            return False
         if email in self.allowed_emails:
             return True
         return bool(self.allowed_domain) and email.endswith("@" + self.allowed_domain)
@@ -85,10 +87,11 @@ class JwtVerifier:
         if not self._allowed(claims):
             log.info("Token valid but user refused: %s", claims.get("email") or claims.get("sub"))
             return None
-        email = str(claims.get("email")).lower()
-        if email not in self._seen:  # once per instance, so logs show who is using it
-            self._seen.add(email)
-            log.info("MCP user: %s", email)
+        # WorkOS user ID when the token has no email; the Users page maps it to the email
+        user = str(claims.get("email") or "").lower() or str(claims.get("sub"))
+        if user not in self._seen:  # once per instance, so logs show who is using it
+            self._seen.add(user)
+            log.info("MCP user: %s", user)
         aud = claims.get("aud")
         return AccessToken(
             token=token,
@@ -96,6 +99,6 @@ class JwtVerifier:
             scopes=str(claims.get("scope") or claims.get("scp") or "").split(),
             expires_at=int(claims["exp"]),
             resource=(aud[0] if isinstance(aud, list) else aud),
-            subject=email,
+            subject=user,
             claims=claims,
         )
