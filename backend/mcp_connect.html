@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlayIntel for Claude and ChatGPT</title>
+<meta name="description" content="Ask Claude or ChatGPT about the Steam market with PlayIntel's data on ~77k games.">
+<style>
+  :root {
+    --bg: #f8fafc; --card: #ffffff; --ink: #0f172a; --muted: #475569; --line: #e2e8f0;
+    --accent: #f97316; --accent-ink: #ffffff; --ok-bg: #ecfdf5; --ok-ink: #065f46; --code: #f1f5f9;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1120; --card: #111827; --ink: #f1f5f9; --muted: #94a3b8; --line: #1f2937;
+      --ok-bg: #052e22; --ok-ink: #a7f3d0; --code: #1e293b; color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 20px 64px; }
+  .brand { font-weight: 700; letter-spacing: .02em; color: var(--accent); }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.15; margin: 8px 0 12px; }
+  .lede { color: var(--muted); font-size: 1.1rem; margin: 0 0 28px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+          padding: 22px 22px 18px; margin: 16px 0; }
+  .card h2 { font-size: 1.1rem; margin: 0 0 10px; display: flex; gap: 10px; align-items: center; }
+  .step { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+          background: var(--accent); color: var(--accent-ink); font-size: .85rem; flex: none; }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none;
+         font-weight: 600; padding: 11px 18px; border-radius: 10px; border: 0; cursor: pointer; font-size: 1rem; }
+  .btn.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .url { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 10px 0 4px; }
+  .url code { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; background: var(--code);
+              padding: 10px 12px; border-radius: 8px; font-size: .92rem; }
+  ol { padding-left: 1.2rem; margin: 8px 0; } li { margin: 4px 0; }
+  .muted { color: var(--muted); font-size: .92rem; }
+  .welcome { background: var(--ok-bg); color: var(--ok-ink); border-radius: 12px; padding: 14px 18px; margin: 0 0 16px; }
+  .asks { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 8px; }
+  .asks div { background: var(--code); border-radius: 10px; padding: 10px 12px; font-size: .95rem; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">PlayIntel</div>
+  <h1>Steam market intelligence, inside Claude and ChatGPT</h1>
+  <p class="lede">Ask about pricing, niches and competitors and get answers backed by data on ~77,000 Steam games.</p>
+
+  <div class="welcome" {{WELCOME_HIDDEN}}><strong>You're signed up.</strong> Add the connector below and sign in with the same email when asked.</div>
+
+  <section class="card" {{SIGNUP_HIDDEN}}>
+    <h2><span class="step">1</span> Create your free account</h2>
+    <p class="muted">Access is immediate. You can also skip this: Claude or ChatGPT will offer sign-up the first time you connect.</p>
+    <a class="btn" href="{{SIGNUP_URL}}">Sign up with email</a>
+  </section>
+
+  <section class="card">
+    <h2><span class="step">2</span> Add PlayIntel to your AI assistant</h2>
+    <p>Connector URL:</p>
+    <div class="url"><code id="url">{{CONNECTOR_URL}}</code>
+      <button class="btn secondary" id="copy" type="button">Copy</button></div>
+    <p><strong>Claude</strong> (web or desktop)</p>
+    <ol>
+      <li>Open <em>Settings → Connectors</em> and choose <em>Add custom connector</em>.</li>
+      <li>Name it <em>PlayIntel</em>, paste the URL above, and click <em>Add</em>.</li>
+      <li>Click <em>Connect</em> and sign in or sign up.</li>
+    </ol>
+    <p><strong>ChatGPT</strong></p>
+    <ol>
+      <li>Open <em>Settings → Apps &amp; Connectors → Advanced</em> and turn on <em>Developer mode</em>.</li>
+      <li>Create a connector named <em>PlayIntel</em> with the URL above, authentication <em>OAuth</em>.</li>
+      <li>Sign in or sign up when prompted, then enable PlayIntel in a chat.</li>
+    </ol>
+    <p class="muted">Menu names change from time to time, and some plans or workspaces need an admin to allow custom connectors.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="step">3</span> Ask away</h2>
+    <div class="asks">
+      <div>What should I price a farming sim at?</div>
+      <div>How saturated is the roguelike deckbuilder niche?</div>
+      <div>Which tags have the best success rate under $10?</div>
+      <div>How does Supergiant compare with similar developers?</div>
+    </div>
+    <p class="muted">Owner counts are SteamSpy estimates, not sales figures.</p>
+  </section>
+</main>
+<script>
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("url").textContent.trim());
+      e.target.textContent = "Copied";
+    } catch { e.target.textContent = "Select and copy"; }
+    setTimeout(() => (e.target.textContent = "Copy"), 2000);
+  });
+</script>
+</body>
+</html>
