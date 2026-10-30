@@ -48,8 +48,8 @@ AGGREGATES = {
         " avg_price_paid_games, avg_rating, total_reviews_submitted, unique_developers, unique_publishers",
         """
         SELECT 'Overall', COUNT(*), COUNT(*) FILTER (WHERE price_usd = 0),
-               -- Playtime counts games without SteamSpy playtime as 0; rating needs 10+ reviews
-               COUNT(*) FILTER (WHERE price_usd > 0), SUM(total_owners), AVG(COALESCE(avg_hours_played, 0)),
+               -- Playtime averages only games with SteamSpy playtime; rating needs 10+ reviews
+               COUNT(*) FILTER (WHERE price_usd > 0), SUM(total_owners), AVG(avg_hours_played),
                AVG(price_usd) FILTER (WHERE price_usd > 0),
                AVG(rating_percentage) FILTER (WHERE total_reviews >= 10),
                SUM(total_reviews), COUNT(DISTINCT developer), COUNT(DISTINCT publisher)
