@@ -44,7 +44,7 @@ CONCURRENT_REQUESTS = 4
 # Limits for daily runs (to keep runtime reasonable)
 MAX_NEW_GAMES_PER_RUN = 500
 MAX_ENRICHMENTS_PER_RUN = 1000  # For new games without data
-MAX_UPDATES_PER_RUN = 2000      # For existing games needing refresh
+MAX_UPDATES_PER_RUN = int(os.getenv("MAX_UPDATES_PER_RUN") or 2000)  # Existing games needing refresh; raise for a backfill
 MAX_PAGES_TO_CHECK = 20         # ~20 minutes of page fetching max
 REFRESH_OLDER_THAN_DAYS = 7     # Refresh games not updated in X days
 
