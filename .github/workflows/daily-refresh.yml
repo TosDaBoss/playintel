@@ -19,6 +19,15 @@ on:
           - enrich-only
           - refresh-only
           - analytics-only
+      max_updates:
+        description: 'Existing games to refresh this run (default 2000; up to ~15000 fits the 3h limit)'
+        required: false
+        default: ''
+
+# One run at a time: overlapping runs would pick the same stale games
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
 
 jobs:
   refresh-data:
@@ -44,6 +53,7 @@ jobs:
       - name: Run data refresh
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MAX_UPDATES_PER_RUN: ${{ inputs.max_updates }}
         run: |
           cd etl
 
