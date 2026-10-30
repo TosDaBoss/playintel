@@ -71,6 +71,10 @@ playintel/
 - **Market Insights**: Pricing, playtime, reviews, engagement
 - **Developer Intelligence**: Benchmarks, comparisons, recommendations
 
+## MCP Server
+
+PlayIntel can also be used directly from Claude, ChatGPT or Cursor as an MCP server. See [backend/MCP_SETUP.md](backend/MCP_SETUP.md).
+
 ## API Endpoints
 
 - `GET /` - Health check
