@@ -156,11 +156,11 @@ def refresh_aggregates(conn, log=print):
             cur.execute(f"DELETE FROM {table}")
             cur.execute(f"INSERT INTO {table} ({columns}) {select}")
             rows, elapsed = cur.rowcount, round(time.time() - start, 2)
+            # Production's agg_refresh_log has no unique key on table_name, so no ON CONFLICT
+            cur.execute("DELETE FROM agg_refresh_log WHERE table_name = %s", (table,))
             cur.execute("""
                 INSERT INTO agg_refresh_log (table_name, last_refreshed, row_count, refresh_duration_seconds)
                 VALUES (%s, NOW(), %s, %s)
-                ON CONFLICT (table_name) DO UPDATE SET last_refreshed = NOW(),
-                    row_count = EXCLUDED.row_count, refresh_duration_seconds = EXCLUDED.refresh_duration_seconds
             """, (table, rows, elapsed))
             log(f"  {table}: {rows} rows in {elapsed}s")
 
