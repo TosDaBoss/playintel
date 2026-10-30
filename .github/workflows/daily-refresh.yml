@@ -24,6 +24,9 @@ jobs:
   refresh-data:
     runs-on: ubuntu-latest
     timeout-minutes: 180  # 3 hour max (usually completes in 30-60 min)
+    permissions:
+      contents: read
+      actions: write  # for the keepalive step
 
     steps:
       - name: Checkout repository
@@ -78,3 +81,11 @@ jobs:
           else
             echo "❌ Data refresh failed"
           fi
+
+      # GitHub disables scheduled workflows after 60 days without commits (it happened
+      # in April 2026). Re-enabling through the API resets that timer.
+      - name: Keep schedule alive
+        if: always() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/daily-refresh.yml/enable"

@@ -29,6 +29,8 @@ import argparse
 from datetime import datetime
 from typing import List, Dict, Optional, Set
 
+from aggregates import refresh_aggregates
+
 # Configuration
 STEAMSPY_API_BASE = "https://steamspy.com/api.php"
 STEAM_API_BASE = "https://store.steampowered.com/api/appdetails"
@@ -693,42 +695,9 @@ def update_analytics(conn):
     """)
     conn.commit()
 
-    # Update aggregate tables
+    # Rebuild summary_stats and every agg_* table (see aggregates.py)
     log("Refreshing aggregate tables...")
-
-    # Price tier stats - TRUNCATE and re-insert
-    cursor.execute("TRUNCATE TABLE agg_price_tier_stats")
-    cursor.execute("""
-        INSERT INTO agg_price_tier_stats (
-            price_category, sort_order, game_count,
-            avg_owners, median_owners, avg_rating, avg_playtime_hours,
-            avg_hours_per_dollar, games_90plus_rating, games_1m_plus_owners, success_rate_100k
-        )
-        SELECT
-            price_category,
-            CASE price_category
-                WHEN 'Free' THEN 1
-                WHEN 'Budget ($0-$5)' THEN 2
-                WHEN 'Low ($5-$10)' THEN 3
-                WHEN 'Medium ($10-$20)' THEN 4
-                WHEN 'Standard ($20-$30)' THEN 5
-                WHEN 'Premium ($30-$50)' THEN 6
-                WHEN 'AAA ($50+)' THEN 7
-            END as sort_order,
-            COUNT(*) as game_count,
-            ROUND(AVG(total_owners)::numeric) as avg_owners,
-            PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY total_owners) as median_owners,
-            ROUND(AVG(rating_percentage)::numeric, 1) as avg_rating,
-            ROUND(AVG(avg_hours_played)::numeric, 1) as avg_playtime_hours,
-            ROUND(AVG(hours_per_dollar)::numeric, 2) as avg_hours_per_dollar,
-            COUNT(*) FILTER (WHERE rating_percentage >= 90) as games_90plus_rating,
-            COUNT(*) FILTER (WHERE total_owners >= 1000000) as games_1m_plus_owners,
-            ROUND((100.0 * COUNT(*) FILTER (WHERE total_owners >= 100000) / NULLIF(COUNT(*), 0))::numeric, 1) as success_rate_100k
-        FROM fact_game_metrics
-        WHERE price_category IS NOT NULL
-        GROUP BY price_category
-    """)
-    conn.commit()
+    refresh_aggregates(conn, log)
 
     # Log refresh - TRUNCATE and re-insert
     cursor.execute("DELETE FROM agg_refresh_log WHERE table_name = 'daily_refresh'")
