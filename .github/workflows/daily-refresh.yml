@@ -4,6 +4,8 @@ on:
   # Run every day at 6 AM UTC (adjust to your timezone)
   schedule:
     - cron: '0 6 * * *'
+    # Sunday 1 AM UTC: deep search for new games across every SteamSpy page (~2 hours)
+    - cron: '0 1 * * 0'
 
   # Allow manual trigger
   workflow_dispatch:
@@ -19,6 +21,12 @@ on:
           - enrich-only
           - refresh-only
           - analytics-only
+          - deep-search
+
+# One run at a time: the daily run waits for a long deep search instead of overlapping
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
 
 jobs:
   refresh-data:
@@ -50,6 +58,8 @@ jobs:
           # Determine mode
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             MODE="${{ inputs.mode }}"
+          elif [ "${{ github.event.schedule }}" == "0 1 * * 0" ]; then
+            MODE="deep-search"
           else
             MODE="full"
           fi
@@ -67,6 +77,9 @@ jobs:
               ;;
             analytics-only)
               python daily_refresh.py --analytics-only
+              ;;
+            deep-search)
+              python daily_refresh.py --deep-search
               ;;
             *)
               python daily_refresh.py

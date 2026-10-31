@@ -63,7 +63,9 @@ mcp = MCPServer(
         "Read the playintel://schema resource before writing SQL. Tags are Title Case "
         "with hyphens (e.g. 'Rogue-like', 'Farming Sim'); match with ILIKE when unsure. "
         "Owner counts are SteamSpy estimates, not sales: say so when quoting them. "
-        "Call data_freshness if the user asks how current the data is."
+        "Call data_freshness if the user asks how current the data is. "
+        "For changes over time use market_trends and game_history (monthly history "
+        "starts November 2026)."
     ),
 )
 
@@ -226,6 +228,64 @@ def developer_benchmark(developer: str) -> dict:
 def data_freshness() -> dict:
     """When each aggregate table was last refreshed."""
     return _query("SELECT * FROM agg_refresh_log ORDER BY last_refreshed DESC")
+
+
+@mcp.tool(annotations=READ_ONLY)
+def market_trends(dimension: Literal["market", "price_tier", "tag", "genre"] = "market",
+                  key: Optional[str] = None, months: int = 13) -> dict:
+    """Month-on-month and year-on-year changes from the monthly snapshots (history
+    starts November 2026). `key` is a partial tag, genre or price category; omit it
+    for every key in the dimension. *_vs_prev_month / *_vs_prev_year are differences
+    (null until that earlier snapshot exists)."""
+    where = ["c.dimension = %s",
+             "c.snapshot_month >= date_trunc('month', NOW()) - make_interval(months => %s)"]
+    params: list[Any] = [dimension, max(months - 1, 0)]
+    if key:
+        where.append("c.key ILIKE %s"); params.append(f"%{key}%")
+    return _query(
+        f"""SELECT c.snapshot_month, c.key, c.game_count, c.avg_owners, c.median_owners,
+                   c.avg_rating, c.avg_price, c.success_rate_100k,
+                   c.game_count - m.game_count AS game_count_vs_prev_month,
+                   c.game_count - y.game_count AS game_count_vs_prev_year,
+                   c.median_owners - m.median_owners AS median_owners_vs_prev_month,
+                   c.median_owners - y.median_owners AS median_owners_vs_prev_year,
+                   c.avg_rating - m.avg_rating AS avg_rating_vs_prev_month,
+                   c.avg_rating - y.avg_rating AS avg_rating_vs_prev_year,
+                   c.success_rate_100k - m.success_rate_100k AS success_rate_vs_prev_month,
+                   c.success_rate_100k - y.success_rate_100k AS success_rate_vs_prev_year
+            FROM market_snapshots_monthly c
+            LEFT JOIN market_snapshots_monthly m ON m.dimension = c.dimension AND m.key = c.key
+                 AND m.snapshot_month = c.snapshot_month - INTERVAL '1 month'
+            LEFT JOIN market_snapshots_monthly y ON y.dimension = c.dimension AND y.key = c.key
+                 AND y.snapshot_month = c.snapshot_month - INTERVAL '1 year'
+            WHERE {' AND '.join(where)}
+            ORDER BY c.key, c.snapshot_month""",
+        tuple(params),
+    )
+
+
+@mcp.tool(annotations=READ_ONLY)
+def game_history(name: Optional[str] = None, appid: Optional[int] = None,
+                 period: Literal["monthly", "weekly"] = "monthly") -> dict:
+    """One game's numbers over time (owners, reviews, rating, price, players online).
+    Monthly covers every game; weekly only games first seen in the last year. Give
+    an appid or a partial name (matches up to 5 games). data_as_of is when SteamSpy
+    last refreshed the game before that snapshot."""
+    table, col = ("game_snapshots_weekly", "snapshot_week") if period == "weekly" \
+        else ("game_snapshots_monthly", "snapshot_month")
+    if appid is not None:
+        match, params = "appid = %s", (appid,)
+    elif name:
+        match, params = ("appid IN (SELECT appid FROM fact_game_metrics WHERE name ILIKE %s "
+                         "ORDER BY total_owners DESC NULLS LAST LIMIT 5)"), (f"%{name}%",)
+    else:
+        return {"error": "Pass name or appid."}
+    return _query(
+        f"""SELECT {col} AS snapshot, appid, name, total_owners, positive_reviews, total_reviews,
+                   rating_percentage, price_usd, ccu, avg_hours_played, data_as_of
+            FROM {table} WHERE {match} ORDER BY appid, {col}""",
+        params,
+    )
 
 
 _FORBIDDEN = re.compile(
