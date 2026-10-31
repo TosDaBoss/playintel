@@ -196,6 +196,25 @@ def get_database_schema():
     10. agg_refresh_log (tracks when aggregate tables were last updated)
         - table_name (PRIMARY KEY), last_refreshed, row_count, refresh_duration_seconds
 
+    === HISTORY (SNAPSHOT) TABLES - start November 2026 ===
+
+    game_snapshots_monthly (every game, once a month)
+        - snapshot_month (1st of the month), appid (together the PRIMARY KEY)
+        - same columns as fact_game_metrics: name, developer, publisher, price_usd,
+          price_category, total_owners, positive_reviews, negative_reviews, total_reviews,
+          rating_percentage, avg_hours_played, median_hours_played, ccu, genres, top_tags
+        - first_seen (when the pipeline first found the game), data_as_of (last SteamSpy refresh)
+        USE FOR: one game's history, cohorts, growth between months/years
+
+    game_snapshots_weekly (games first seen in the last year, once a week)
+        - snapshot_week (Monday) instead of snapshot_month, otherwise identical
+
+    market_snapshots_monthly (market stats, once a month)
+        - snapshot_month, dimension ('market', 'price_tier', 'tag', 'genre'), key ('all',
+          price category, tag or genre name)
+        - game_count, avg_owners, median_owners, avg_rating, avg_price, success_rate_100k
+        USE FOR: month-on-month and year-on-year market comparisons
+
     === LEGACY DIMENSION TABLES ===
 
     11. dim_developers (49,768 developers)

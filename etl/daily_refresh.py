@@ -7,6 +7,7 @@ This script:
 1. Fetches new games from SteamSpy
 2. Enriches them with SteamSpy + Steam API data
 3. Updates analytics/aggregate tables
+4. Saves monthly and weekly snapshots for comparisons
 
 Environment Variables Required:
 - DATABASE_URL: Supabase PostgreSQL connection string
@@ -30,6 +31,7 @@ from datetime import datetime
 from typing import List, Dict, Optional, Set
 
 from aggregates import refresh_aggregates
+from snapshots import take_snapshots
 
 # Configuration
 STEAMSPY_API_BASE = "https://steamspy.com/api.php"
@@ -44,7 +46,7 @@ CONCURRENT_REQUESTS = 4
 # Limits for daily runs (to keep runtime reasonable)
 MAX_NEW_GAMES_PER_RUN = 500
 MAX_ENRICHMENTS_PER_RUN = 1000  # For new games without data
-MAX_UPDATES_PER_RUN = 2000      # For existing games needing refresh
+MAX_UPDATES_PER_RUN = 3000      # For existing games; ~77k games / 30 days, so monthly snapshots are current
 MAX_PAGES_TO_CHECK = 20         # ~20 minutes of page fetching max
 REFRESH_OLDER_THAN_DAYS = 7     # Refresh games not updated in X days
 
@@ -698,6 +700,10 @@ def update_analytics(conn):
     # Rebuild summary_stats and every agg_* table (see aggregates.py)
     log("Refreshing aggregate tables...")
     refresh_aggregates(conn, log)
+
+    # Monthly/weekly history for comparisons (see snapshots.py)
+    log("Taking snapshots...")
+    take_snapshots(conn, log)
 
     # Log refresh - TRUNCATE and re-insert
     cursor.execute("DELETE FROM agg_refresh_log WHERE table_name = 'daily_refresh'")

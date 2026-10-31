@@ -43,6 +43,22 @@ All dynamic data points that change over time are refreshed on each run:
 - **Top 100 popular games**: Full refresh including Steam API
 - **Other existing games**: SteamSpy-only refresh (faster)
 
+## History (Snapshots)
+
+Each refresh overwrites a game's numbers, so `snapshots.py` keeps history after the
+analytics step:
+
+| Table | What | When |
+|-------|------|------|
+| `game_snapshots_monthly` | Every game | First successful run of each month |
+| `game_snapshots_weekly` | Games first seen in the last year | First successful run of each week (Monday) |
+| `market_snapshots_monthly` | Overall, price tier, tag and genre stats | First successful run of each month |
+
+The tables (and the primary keys the new-game insert needs) come from
+`add_keys_and_snapshots.sql`, run once in the Supabase SQL editor. Until then the
+snapshot step logs a warning and skips. About 77k rows a month (~15-20 MB).
+`MAX_UPDATES_PER_RUN` is 3000 so the whole catalogue is refreshed within a month.
+
 ## Time Estimates Per Run
 
 | Scenario | New Games | Enrichments | Total Time |
