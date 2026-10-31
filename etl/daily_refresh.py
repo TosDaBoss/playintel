@@ -17,6 +17,7 @@ Usage:
     python daily_refresh.py --fetch-only       # Only fetch new games
     python daily_refresh.py --enrich-only      # Only enrich existing games
     python daily_refresh.py --analytics-only   # Only update analytics
+    python daily_refresh.py --deep-search      # Weekly: search every SteamSpy page, enrich new games
 """
 
 import asyncio
@@ -48,6 +49,7 @@ MAX_NEW_GAMES_PER_RUN = 500
 MAX_ENRICHMENTS_PER_RUN = 1000  # For new games without data
 MAX_UPDATES_PER_RUN = 3000      # For existing games; ~77k games / 30 days, so monthly snapshots are current
 MAX_PAGES_TO_CHECK = 20         # ~20 minutes of page fetching max
+DEEP_SEARCH_MAX_PAGES = 100     # Weekly --deep-search: the whole SteamSpy list (~80 pages, ~85 min)
 REFRESH_OLDER_THAN_DAYS = 7     # Refresh games not updated in X days
 
 
@@ -69,8 +71,13 @@ def log(message: str):
 # STEP 1: Fetch New Games from SteamSpy
 # ============================================================================
 
-def fetch_new_games(conn) -> int:
-    """Fetch new games from SteamSpy that aren't in our database."""
+def fetch_new_games(conn, deep: bool = False) -> int:
+    """Fetch new games from SteamSpy that aren't in our database.
+
+    SteamSpy lists the most-owned games first, so new (small) games sit on later
+    pages. The daily search stops early; deep=True (weekly) reads every page with
+    no new-game limit.
+    """
     import requests
 
     log("=" * 60)
@@ -87,8 +94,9 @@ def fetch_new_games(conn) -> int:
 
     new_apps = []
     consecutive_empty = 0
+    max_pages = DEEP_SEARCH_MAX_PAGES if deep else MAX_PAGES_TO_CHECK
 
-    for page in range(MAX_PAGES_TO_CHECK):
+    for page in range(max_pages):
         try:
             url = f"{STEAMSPY_API_BASE}?request=all&page={page}"
             log(f"Fetching page {page}...")
@@ -119,17 +127,17 @@ def fetch_new_games(conn) -> int:
             else:
                 log(f"  No new games on this page")
                 consecutive_empty += 1
-                if consecutive_empty >= 3:
+                if consecutive_empty >= 3 and not deep:
                     log("3 consecutive empty pages, stopping search")
                     break
 
             # Check if we've hit our limit
-            if len(new_apps) >= MAX_NEW_GAMES_PER_RUN:
+            if len(new_apps) >= MAX_NEW_GAMES_PER_RUN and not deep:
                 log(f"Reached limit of {MAX_NEW_GAMES_PER_RUN} new games")
                 break
 
             # Rate limit
-            if page < MAX_PAGES_TO_CHECK - 1:
+            if page < max_pages - 1:
                 time.sleep(STEAMSPY_PAGE_DELAY)
 
         except Exception as e:
@@ -818,6 +826,8 @@ def main():
     parser.add_argument('--refresh-only', action='store_true', help='Only refresh existing games (stale data)')
     parser.add_argument('--analytics-only', action='store_true', help='Only update analytics')
     parser.add_argument('--cleanup-only', action='store_true', help='Only remove stale apps')
+    parser.add_argument('--deep-search', action='store_true',
+                        help='Search every SteamSpy page for new games, then enrich them (weekly)')
     args = parser.parse_args()
 
     start_time = time.time()
@@ -836,12 +846,15 @@ def main():
         removed = 0
 
         # Determine what to run
-        run_all = not (args.fetch_only or args.enrich_only or args.refresh_only or args.analytics_only or args.cleanup_only)
+        run_all = not (args.fetch_only or args.enrich_only or args.refresh_only or args.analytics_only or args.cleanup_only
+                       or args.deep_search)
 
-        if run_all or args.fetch_only:
+        if args.deep_search:
+            new_games = fetch_new_games(conn, deep=True)
+        elif run_all or args.fetch_only:
             new_games = fetch_new_games(conn)
 
-        if run_all or args.enrich_only:
+        if run_all or args.enrich_only or args.deep_search:
             enriched = asyncio.run(enrich_games(conn))
 
         if run_all or args.refresh_only:
